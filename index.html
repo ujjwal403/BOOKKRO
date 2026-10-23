@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>BOOKKRO | Explore College Events & Book Entry Passes</title>
+  <meta name="description" content="BOOKKRO - One stop platform for college events. Explore campus fests, concerts, hackathons, and book verified entry passes instantly." />
+  
+  <!-- Modern Google Fonts: Outfit for Festive Elegance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css" />
+
+  <!-- EmailJS SDK for direct browser-to-inbox ticket delivery -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+  <!-- Favicon / Touch Icon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎟️</text></svg>">
+</head>
+<body>
+
+  <!-- App Wrapper -->
+  <div class="app-container">
+
+    <!-- Top Navigation Bar -->
+    <header class="top-navbar">
+      <a href="#home" class="brand-wrapper" title="BOOKKRO - College Events Platform">
+        <div class="brand-logo-badge">🎟️</div>
+        <div class="brand-text-col">
+          <h1 style="font-size:1.35rem; font-weight:900; letter-spacing:1px; background:linear-gradient(90deg, #fef3c7, #f59e0b, #fbbf24); -webkit-background-clip:text; -webkit-text-fill-color:transparent; margin:0;">BOOKKRO</h1>
+          <p style="font-size:0.7rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; margin:0;">Multi-College Event & Ticketing Portal</p>
+        </div>
+      </a>
+
+      <!-- Quick Nav Links, Host Event & Admin Portal Button -->
+      <div style="display:flex; align-items:center; gap:8px;">
+        <a href="#home" class="nav-quick-link" style="text-decoration:none; color:#fde68a; font-size:0.82rem; font-weight:700; display:inline-flex; align-items:center; gap:5px; padding:6px 12px; border-radius:12px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12);" onclick="GarbaApp.navigateTo('home')">
+          <span>🎪</span>
+          <span>All Events</span>
+        </a>
+
+        <!-- Prominent "+ Host Event" Button for any college -->
+        <button type="button" class="top-nav-host-btn" onclick="GarbaApp.openHostEventModal()" title="Host an event for your college or club">
+          <span>➕</span>
+          <span>Host College Event</span>
+        </button>
+
+        <a href="#my-pass" class="nav-quick-link" style="text-decoration:none; color:#cbd5e1; font-size:0.82rem; font-weight:600; display:inline-flex; align-items:center; gap:5px; padding:6px 12px; border-radius:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);" onclick="GarbaApp.navigateTo('my-pass')">
+          <span>🎫</span>
+          <span>My Pass</span>
+        </a>
+
+        <button id="outboxNavTrigger" class="backend-indicator-badge" onclick="GarbaApp.navigateTo('outbox')" title="View Dispatched Email Outbox" style="display:none;">
+          <span>📬 Outbox</span>
+          <span id="outboxCountBadge" style="background:#e11d48; color:#fff; font-size:0.7rem; padding:1px 6px; border-radius:10px; display:none;">0</span>
+        </button>
+
+        <div id="backendStatusBadge" class="backend-indicator-badge" onclick="GarbaApp.navigateTo('settings')" style="display:none;">
+          <div id="backendStatusDot" class="status-dot local"></div>
+          <span id="backendStatusText">Local Sheet Mode</span>
+        </div>
+
+        <!-- Prominent Admin Portal Button: Directly visible and clickable -->
+        <a href="#admin-login" id="topNavAdminBtn" class="top-nav-admin-btn" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px; background:linear-gradient(135deg, rgba(245,158,11,0.2) 0%, rgba(225,29,72,0.2) 100%); border:1px solid rgba(245,158,11,0.5); color:#fde68a; padding:6px 14px; border-radius:20px; font-size:0.82rem; font-weight:700; box-shadow:0 2px 8px rgba(0,0,0,0.3); transition:all 0.2s ease;">
+          <span>🔒</span>
+          <span>Admin</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content Views Container -->
+    <main>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 1: COLLEGE EVENTS HUB (HOME PAGE)                            -->
+      <!-- ================================================================= -->
+      <section id="view-home" class="view-section active">
+        
+        <!-- Feature Banner: Any College Can Host Events -->
+        <div class="host-event-promo-card">
+          <div class="host-event-promo-content">
+            <div class="host-event-promo-badge">🏛️ MULTI-COLLEGE EVENT PLATFORM</div>
+            <h2 class="host-event-promo-title">Any College Can Host. Any Student Can Attend.</h2>
+            <p class="host-event-promo-desc">
+              Organizing a campus cultural fest, coding hackathon, or sports tournament? Host your event on BOOKKRO with instant digital QR ticketing, duplicate protection, email passes, and mobile gate scanner.
+            </p>
+          </div>
+          <div class="host-event-promo-actions">
+            <button class="btn btn-primary" style="width:auto; padding:12px 22px; font-weight:800;" onclick="GarbaApp.openHostEventModal()">
+              <span>🚀</span>
+              <span>Host College Event (Free)</span>
+            </button>
+            <button class="btn btn-secondary" style="width:auto; padding:12px 18px; font-weight:700;" onclick="GarbaApp.scrollToEventsCatalog()">
+              <span>🎪</span>
+              <span>Explore Events</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Events Hub Header & Filters -->
+        <div class="events-hub-header" id="eventsCatalogSection">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin-bottom:12px;">
+            <div>
+              <span class="events-hub-badge">🎟️ EXPLORE CAMPUS EVENTS</span>
+              <h2 class="events-hub-title" style="margin-top:4px;">Campus Events & Festivals</h2>
+            </div>
+            <button class="btn btn-secondary" style="width:auto; padding:8px 16px; font-size:0.82rem; border-color:#10b981; color:#6ee7b7;" onclick="GarbaApp.openHostEventModal()">
+              <span>➕</span> Host Your Event
+            </button>
+          </div>
+
+          <!-- Real-Time Search Bar -->
+          <div class="event-search-wrapper">
+            <span class="event-search-icon">🔍</span>
+            <input type="text" id="eventSearchInput" class="event-search-input" placeholder="Search events by name, college (e.g. KGI, IIT, DU, BITS), city, or venue..." oninput="GarbaApp.onEventSearchInput(this.value)" />
+            <button type="button" id="eventSearchClearBtn" class="event-search-clear" style="display:none;" onclick="GarbaApp.clearEventSearch()">✕</button>
+          </div>
+
+          <!-- College Filter Chips Bar -->
+          <div class="college-filter-section">
+            <div class="college-filter-header">
+              <span class="college-filter-label"><span>🏛️</span> Filter by Hosting College:</span>
+              <span id="activeCollegeCounter" style="font-size:0.75rem; color:var(--text-muted);">Showing all colleges</span>
+            </div>
+            <div class="college-chips-container" id="collegeFilterContainer">
+              <!-- Dynamically populated with all colleges hosting events -->
+            </div>
+          </div>
+
+          <!-- Category Filter Bar -->
+          <div class="events-filter-bar">
+            <button class="event-filter-chip active" onclick="GarbaApp.filterEventsCategory('ALL', this)">All Categories</button>
+            <button class="event-filter-chip" onclick="GarbaApp.filterEventsCategory('CULTURAL', this)">🪔 Cultural & Fests</button>
+            <button class="event-filter-chip" onclick="GarbaApp.filterEventsCategory('TECH', this)">💻 Technical & Hackathons</button>
+            <button class="event-filter-chip" onclick="GarbaApp.filterEventsCategory('SPORTS', this)">🏆 Sports & Games</button>
+            <button class="event-filter-chip" onclick="GarbaApp.filterEventsCategory('MUSIC', this)">🎸 Music & Concerts</button>
+          </div>
+        </div>
+
+        <!-- Dynamic Events Catalog Grid -->
+        <div class="events-catalog-grid" id="eventsCatalogGrid">
+          <!-- Dynamically rendered via GarbaApp.renderEventsCatalog() -->
+        </div>
+
+        <!-- Quick Pass Retrieval Card -->
+        <div class="manual-input-box" style="margin-bottom:24px;">
+          <label class="form-label" style="margin-bottom:6px; font-weight:700;">🔍 Already Booked? Retrieve or Re-Email Your Pass</label>
+          <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:10px;">Enter your College Roll Number, Staff ID, or Ticket ID to view your pass:</p>
+          <div class="manual-input-row">
+            <input type="text" id="quickPassSearchInput" class="form-input" placeholder="e.g. 22BT0145 or EMP-7712 or STU-GRB-000001" style="text-transform:uppercase;" />
+            <button class="btn btn-primary" style="width:auto; padding:0 22px;" onclick="GarbaApp.searchPassByQuery(document.getElementById('quickPassSearchInput').value)">Find Pass</button>
+          </div>
+        </div>
+
+        <!-- Gate Scanner Action for Volunteers -->
+        <div class="category-action-card" style="border-color:rgba(16,185,129,0.35); background:rgba(6,78,59,0.2);" onclick="GarbaApp.navigateTo('scanner')">
+          <div style="display:flex; align-items:center; gap:16px;">
+            <div style="width:50px; height:50px; border-radius:14px; background:rgba(16,185,129,0.25); color:#10b981; display:flex; align-items:center; justify-content:center; font-size:26px;">📷</div>
+            <div>
+              <h4 style="font-size:1.15rem; font-weight:800; color:#6ee7b7; margin-bottom:3px;">Gate Volunteer Scanner</h4>
+              <p style="font-size:0.82rem; color:var(--text-muted); margin:0;">Volunteers: Scan attendee QR passes with camera & verify physical college ID.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Prominent College Organizer & Admin Portal Card -->
+        <div class="category-action-card" style="border-color:rgba(245,158,11,0.4); background:linear-gradient(135deg, rgba(245,158,11,0.08) 0%, rgba(225,29,72,0.08) 100%); margin-top:20px; cursor:pointer;" onclick="GarbaApp.navigateTo('admin-login')">
+          <div style="display:flex; align-items:center; justify-content:space-between; width:100%;">
+            <div style="display:flex; align-items:center; gap:16px;">
+              <div style="width:50px; height:50px; border-radius:14px; background:rgba(245,158,11,0.2); color:#f59e0b; display:flex; align-items:center; justify-content:center; font-size:24px;">🔒</div>
+              <div>
+                <h4 style="font-size:1.1rem; font-weight:800; color:#fde68a; margin-bottom:3px;">College Organizer Admin Portal</h4>
+                <p style="font-size:0.8rem; color:var(--text-muted); margin:0;">Organizer login: Manage attendee lists per event, view live stats & manual check-in.</p>
+              </div>
+            </div>
+            <div style="color:#f59e0b; font-weight:800; font-size:1.2rem;">→</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 1B: EVENT DETAILS & PASS BOOKING (DYNAMIC FOR ANY COLLEGE)   -->
+      <!-- ================================================================= -->
+      <section id="view-event" class="view-section">
+        <!-- Back Navigation & Category Tag -->
+        <div class="event-back-bar">
+          <a href="#home" class="event-back-btn" onclick="GarbaApp.navigateTo('home')">
+            <span>←</span>
+            <span>All Campus Events</span>
+          </a>
+          <span id="eventCategoryPillDisplay" style="font-size:0.78rem; font-weight:700; color:#fde68a; background:rgba(245,158,11,0.15); border:1px solid rgba(245,158,11,0.35); padding:4px 10px; border-radius:12px;">CULTURAL CELEBRATION</span>
+        </div>
+
+        <!-- Hosting College Banner Tag -->
+        <div id="eventHostCollegeBanner" class="event-reg-info-banner" style="margin-bottom:16px;">
+          <div>
+            <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Organized & Hosted By</div>
+            <div id="eventHostCollegeName" class="event-reg-info-title">🏛️ KGI Group of Institutions</div>
+          </div>
+          <div id="eventHostClubTag" class="event-reg-info-college">
+            <span>✨</span> <span id="eventHostClubName">Cultural Committee</span>
+          </div>
+        </div>
+
+        <!-- BookMyShow Cinematic Hero Card -->
+        <div class="bms-hero-container">
+          <div class="bms-hero-layout">
+            <!-- Poster Artwork -->
+            <div class="bms-poster-wrapper">
+              <div id="eventPosterCard" class="bms-event-poster">
+                <div id="eventPosterTagline" class="bms-poster-tagline">✨ COLLEGE EXCLUSIVE</div>
+                <div id="eventDetailPosterIcon" class="bms-poster-icon">🪔</div>
+                <div>
+                  <h3 id="eventDetailPosterTitle" class="bms-poster-title">GARBA NIGHT 2026</h3>
+                  <div id="eventDetailPosterSub" style="font-size:0.8rem; color:#fef3c7; font-weight:600; margin-top:4px;">KGI CULTURAL FEST</div>
+                </div>
+                <div id="eventDetailPosterDate" style="font-size:0.7rem; color:#fde68a; letter-spacing:1px;">16 OCT • 6:00 PM</div>
+              </div>
+            </div>
+
+            <!-- Event Details Column -->
+            <div class="bms-event-info">
+              <!-- Rating & Status -->
+              <div class="bms-rating-bar">
+                <div class="bms-rating-pill">
+                  <span>★</span>
+                  <span id="eventDetailRating">4.9 / 5</span>
+                </div>
+                <span id="eventDetailInterested" class="bms-votes-text">(2,850+ College Attendees Interested)</span>
+              </div>
+
+              <!-- Title -->
+              <h2 id="eventDetailTitle" class="bms-title dynamic-event-name">KGI Garba Night 2026</h2>
+              <p id="eventDetailDesc" style="font-size:0.9rem; color:var(--text-sub); margin-bottom:14px; line-height:1.5;">The biggest cultural night of the year! Live traditional dhol rhythms, DJ sets, authentic Dandiya celebration, and festive dress code for college students & staff.</p>
+
+              <!-- Genre & Language Tags -->
+              <div id="eventDetailTags" class="bms-tag-row">
+                <span class="bms-tag-pill festive-highlight">Dandiya Raas</span>
+                <span class="bms-tag-pill">Live DJ & Dhol</span>
+                <span class="bms-tag-pill">Traditional Attire</span>
+                <span class="bms-tag-pill" style="border-color:#10b981; color:#6ee7b7; font-weight:700;">✉️ Any Gmail Accepted</span>
+              </div>
+
+              <!-- Schedule Grid -->
+              <div class="bms-schedule-card">
+                <div class="bms-schedule-item">
+                  <span class="bms-schedule-label">📅 Date</span>
+                  <span id="eventDetailDate" class="bms-schedule-val dynamic-event-date">16 October 2026</span>
+                </div>
+                <div class="bms-schedule-item">
+                  <span class="bms-schedule-label">⏰ Time</span>
+                  <span id="eventDetailTime" class="bms-schedule-val">6:00 PM – 11:30 PM</span>
+                </div>
+                <div class="bms-schedule-item">
+                  <span class="bms-schedule-label">📍 Venue</span>
+                  <span id="eventDetailVenue" class="bms-schedule-val dynamic-event-venue">Open Air Theatre</span>
+                </div>
+                <div class="bms-schedule-item">
+                  <span class="bms-schedule-label">🎟️ Entry Pass Fee</span>
+                  <span id="eventDetailFee" class="bms-schedule-val" style="color:#10b981;">Free Entry Pass</span>
+                </div>
+              </div>
+
+              <!-- Email & ID Notice -->
+              <div id="eventDetailNotice" class="security-alert-box" style="background:rgba(16,185,129,0.12); border-color:rgba(16,185,129,0.35); color:#d1fae5;">
+                <span style="font-size:20px;">💡</span>
+                <div id="eventDetailNoticeText">
+                  <strong>NO COLLEGE EMAIL REQUIRED:</strong> You can use <strong>any personal Gmail</strong> or email address to book and receive your digital ticket pass! College ID or valid student/staff ID is verified at the host campus gate.
+                </div>
+              </div>
+
+              <!-- Primary Book CTA -->
+              <div style="display:flex; flex-wrap:wrap; gap:12px; align-items:center;">
+                <a href="#student" class="bms-primary-cta" onclick="GarbaApp.navigateTo('student')">
+                  <span>🎟️</span>
+                  <span id="ctaStudentBtnText">BOOK STUDENT PASS</span>
+                </a>
+                <a href="#teacher" class="btn btn-secondary" style="width:auto; padding:16px 24px; font-size:1rem; font-weight:700;" onclick="GarbaApp.navigateTo('teacher')">
+                  <span>👨‍🏫 Faculty / Staff Pass</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category Selector Cards -->
+        <h3 style="font-size:1.15rem; font-weight:800; margin-bottom:14px; color:var(--text-sub);">Select Pass Category:</h3>
+        <div class="category-selection-grid">
+          <!-- Student Card -->
+          <a href="#student" class="category-action-card student-card" onclick="GarbaApp.navigateTo('student')">
+            <div>
+              <div class="card-icon-bubble">🎓</div>
+              <h4 class="category-card-title">Student Entry Pass</h4>
+              <p class="category-card-desc">For currently enrolled college students. Strict Roll Number verification to prevent duplicate or proxy bookings.</p>
+            </div>
+            <div class="card-action-btn-text">
+              <span id="studentCardFeeLabel">Book Student Pass</span>
+              <span>→</span>
+            </div>
+          </a>
+
+          <!-- Teacher Card -->
+          <a href="#teacher" class="category-action-card teacher-card" onclick="GarbaApp.navigateTo('teacher')">
+            <div>
+              <div class="card-icon-bubble">👨‍🏫</div>
+              <h4 class="category-card-title">Teacher / Staff VIP Pass</h4>
+              <p class="category-card-desc">For college faculty and administrative staff. Separate VIP faculty pass verified by Employee ID.</p>
+            </div>
+            <div class="card-action-btn-text">
+              <span>Book Faculty Pass</span>
+              <span>→</span>
+            </div>
+          </a>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 2: STUDENT REGISTRATION (BOOKMYSHOW STYLE)                   -->
+      <!-- ================================================================= -->
+      <section id="view-student" class="view-section">
+        <!-- Closed Banner -->
+        <div id="studentClosedBanner" class="reg-closed-card" style="display:none;">
+          <div class="reg-closed-icon">🚫</div>
+          <div class="reg-closed-title">REGISTRATION CLOSED</div>
+          <p id="studentClosedText" style="color:var(--text-sub); font-size:0.9rem;">Student registrations for this event are currently closed. Please contact event organizers for inquiries.</p>
+        </div>
+
+        <!-- Student Form Container -->
+        <div id="studentFormContainer" class="form-panel">
+          
+          <!-- Event Header Banner -->
+          <div id="studentEventInfoBanner" class="event-reg-info-banner">
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.75px; color:var(--text-muted);">Booking Pass For:</div>
+              <div id="studentEventTitleText" class="event-reg-info-title">KGI Garba Night 2026</div>
+              <div id="studentEventCollegeText" class="event-reg-info-college"><span>🏛️</span> Host Campus: KGI Group of Institutions</div>
+            </div>
+            <a href="#event" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.navigateTo('event')">Change Event</a>
+          </div>
+
+          <div class="form-header">
+            <span class="form-header-badge student-badge-theme">STUDENT ENTRY PASS</span>
+            <h2 class="form-title">Student Registration</h2>
+            <p class="form-subtitle">Enter your details. Your verified QR entry pass will be generated & dispatched instantly.</p>
+          </div>
+
+          <!-- Alert Notification Box -->
+          <div id="studentFormAlert" class="alert-box" style="display:none;"></div>
+
+          <form id="studentRegForm" novalidate>
+            <!-- 1. Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="studentFullName">Full Name <span class="req">*</span></label>
+              <input type="text" id="studentFullName" name="name" class="form-input" placeholder="e.g. Rahul Sharma" required />
+            </div>
+
+            <!-- College Name (Enables Inter-College Booking for Any Event) -->
+            <div class="form-group" id="studentCollegeGroup">
+              <label class="form-label" for="studentCollegeName">Your College / University Name <span class="req">*</span></label>
+              <input type="text" id="studentCollegeName" name="collegeName" class="form-input" placeholder="e.g. KGI Group of Institutions or IIT Bombay" required />
+              <p class="input-hint">Enter your enrolled college name (verified at the entry gate alongside your physical student ID card).</p>
+            </div>
+
+            <!-- 2. Roll Number -->
+            <div class="form-group">
+              <label class="form-label" for="studentRollNumber">College Roll Number <span class="req">*</span></label>
+              <input type="text" id="studentRollNumber" name="rollNumber" class="form-input" placeholder="e.g. 22BT0145" style="text-transform:uppercase;" required />
+              <p class="input-hint">⚠️ Must match your original college ID card. Cannot book on behalf of another roll number.</p>
+            </div>
+
+            <!-- 3. Department -->
+            <div class="form-group">
+              <label class="form-label" for="studentDepartment">Department <span class="req">*</span></label>
+              <select id="studentDepartment" name="department" class="form-select" required>
+                <!-- Populated dynamically from settings -->
+              </select>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <!-- 4. Year -->
+              <div class="form-group">
+                <label class="form-label" for="studentYear">Year <span class="req">*</span></label>
+                <select id="studentYear" name="year" class="form-select" required>
+                  <!-- Populated from settings -->
+                </select>
+              </div>
+
+              <!-- 5. Section -->
+              <div class="form-group">
+                <label class="form-label" for="studentSection">Section <span class="req">*</span></label>
+                <select id="studentSection" name="section" class="form-select" required>
+                  <!-- Populated from settings -->
+                </select>
+              </div>
+            </div>
+
+            <!-- 6. Email Address -->
+            <div class="form-group">
+              <label class="form-label" for="studentEmail">Email Address (Any Gmail / Personal Email) <span class="req">*</span></label>
+              <input type="email" id="studentEmail" name="email" class="form-input" placeholder="e.g. yourname@gmail.com" required />
+              <p class="input-hint">✅ <strong>College email is NOT compulsory.</strong> You can use your personal Gmail or any email to receive your digital ticket pass.</p>
+            </div>
+
+            <button type="submit" id="studentSubmitBtn" class="btn btn-primary" style="margin-top:8px;">
+              <span class="spinner-inline" style="display:none;"></span>
+              <span class="btn-text">Book Student Entry Pass</span>
+            </button>
+          </form>
+
+          <p style="text-align:center; font-size:0.75rem; color:var(--text-muted); margin-top:16px;">
+            Unique QR Pass with Anti-Proxy Protection • Physical College ID required at Gate
+          </p>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 3: TEACHER / STAFF REGISTRATION (SEPARATE)                   -->
+      <!-- ================================================================= -->
+      <section id="view-teacher" class="view-section">
+        <!-- Closed Banner -->
+        <div id="teacherClosedBanner" class="reg-closed-card" style="display:none;">
+          <div class="reg-closed-icon">🚫</div>
+          <div class="reg-closed-title">REGISTRATION CLOSED</div>
+          <p id="teacherClosedText" style="color:var(--text-sub); font-size:0.9rem;">Faculty & Staff registrations are currently closed. Please contact event committee.</p>
+        </div>
+
+        <!-- Teacher Form Container -->
+        <div id="teacherFormContainer" class="form-panel">
+          
+          <!-- Event Header Banner -->
+          <div id="teacherEventInfoBanner" class="event-reg-info-banner">
+            <div>
+              <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.75px; color:var(--text-muted);">Booking Faculty VIP Pass For:</div>
+              <div id="teacherEventTitleText" class="event-reg-info-title">KGI Garba Night 2026</div>
+              <div id="teacherEventCollegeText" class="event-reg-info-college"><span>🏛️</span> Host Campus: KGI Group of Institutions</div>
+            </div>
+            <a href="#event" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.navigateTo('event')">Change Event</a>
+          </div>
+
+          <div class="form-header">
+            <span class="form-header-badge teacher-badge-theme">FACULTY & STAFF VIP PASS</span>
+            <h2 class="form-title">Teacher / Staff Registration</h2>
+            <p class="form-subtitle">For college teachers, professors, instructors, and administrative staff.</p>
+          </div>
+
+          <!-- Alert Notification Box -->
+          <div id="teacherFormAlert" class="alert-box" style="display:none;"></div>
+
+          <form id="teacherRegForm" novalidate>
+            <!-- 1. Full Name -->
+            <div class="form-group">
+              <label class="form-label" for="teacherFullName">Full Name <span class="req">*</span></label>
+              <input type="text" id="teacherFullName" name="name" class="form-input" placeholder="e.g. Dr. Rajesh Kumar" required />
+            </div>
+
+            <!-- College Name -->
+            <div class="form-group" id="teacherCollegeGroup">
+              <label class="form-label" for="teacherCollegeName">Institution / College Name <span class="req">*</span></label>
+              <input type="text" id="teacherCollegeName" name="collegeName" class="form-input" placeholder="e.g. KGI Group of Institutions or IIT Bombay" required />
+            </div>
+
+            <!-- 2. Employee / Staff ID -->
+            <div class="form-group">
+              <label class="form-label" for="teacherStaffId">Employee / Staff ID <span class="req">*</span></label>
+              <input type="text" id="teacherStaffId" name="staffId" class="form-input" placeholder="e.g. EMP-7712" style="text-transform:uppercase;" required />
+              <p class="input-hint">⚠️ Must match your official college staff ID card.</p>
+            </div>
+
+            <!-- 3. Department -->
+            <div class="form-group">
+              <label class="form-label" for="teacherDepartment">Department <span class="req">*</span></label>
+              <select id="teacherDepartment" name="department" class="form-select" required>
+                <!-- Populated from settings -->
+              </select>
+            </div>
+
+            <!-- 4. Designation -->
+            <div class="form-group">
+              <label class="form-label" for="teacherDesignation">Designation <span class="req">*</span></label>
+              <input type="text" id="teacherDesignation" name="designation" class="form-input" placeholder="e.g. Assistant Professor / HoD / Lab Tech" required />
+            </div>
+
+            <!-- 5. Email Address -->
+            <div class="form-group">
+              <label class="form-label" for="teacherEmail">Email Address (Any Gmail / Personal Email) <span class="req">*</span></label>
+              <input type="email" id="teacherEmail" name="email" class="form-input" placeholder="e.g. yourname@gmail.com" required />
+              <p class="input-hint">✅ <strong>College email is NOT compulsory.</strong> Any personal Gmail or email address is accepted to receive your VIP pass.</p>
+            </div>
+
+            <!-- 6. Mobile Number (optional) -->
+            <div class="form-group">
+              <label class="form-label" for="teacherMobile">Mobile Number <span style="color:var(--text-muted); font-size:0.75rem;">(Optional)</span></label>
+              <input type="tel" id="teacherMobile" name="mobile" class="form-input" placeholder="+91 98765 43210" />
+            </div>
+
+            <button type="submit" id="teacherSubmitBtn" class="btn btn-teacher" style="margin-top:8px;">
+              <span class="spinner-inline" style="display:none;"></span>
+              <span class="btn-text">Book Faculty Entry Pass</span>
+            </button>
+          </form>
+
+          <p style="text-align:center; font-size:0.75rem; color:var(--text-muted); margin-top:16px;">
+            Ticket ID Format: <code>TCH-GRB-XXXXXX</code> • Strictly separate from student records
+          </p>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 3.5: SECURE UPI FEE PAYMENT & VERIFICATION                   -->
+      <!-- ================================================================= -->
+      <section id="view-payment" class="view-section">
+        <div class="payment-wrapper">
+          <div class="form-header" style="text-align:center;">
+            <span class="hero-tag" style="background:rgba(245,158,11,0.15); border-color:#f59e0b; color:#fde68a;">SECURE TICKET FEE PAYMENT</span>
+            <h2 class="form-title" style="margin-top:6px;">Complete Registration Payment</h2>
+            <p class="form-subtitle">Scan the college event QR code or pay via UPI, then enter your 12-digit UPI Reference / UTR Number to submit for coordinator verification.</p>
+          </div>
+
+          <div class="payment-card">
+            <!-- Payment Fee Hero -->
+            <div class="payment-amount-hero">
+              <div class="fee-label">Registration Pass Fee</div>
+              <div id="payFeeAmount" class="fee-value">₹150</div>
+              <div id="payAttendeeDesc" class="fee-attendee">Booking reserved for Attendee</div>
+              <div id="payTicketIdBadge" style="display:inline-block; margin-top:6px; font-family:monospace; font-weight:700; background:rgba(0,0,0,0.3); padding:2px 10px; border-radius:8px; color:#fde68a; font-size:0.8rem;">
+                TICKET: -
+              </div>
+            </div>
+
+            <!-- Dynamic UPI QR Code Box -->
+            <div class="payment-qr-container">
+              <div class="payment-qr-box">
+                <canvas id="paymentUpiQrCanvas" width="200" height="200" style="display:block; margin:0 auto;"></canvas>
+              </div>
+              <div style="font-size:0.75rem; color:var(--text-muted); margin-top:8px;">
+                Scan with any UPI App: GPay, PhonePe, Paytm, BHIM, Cred
+              </div>
+            </div>
+
+            <!-- UPI ID Copy Bar -->
+            <div class="payment-upi-pill">
+              <div>
+                <div style="font-size:0.72rem; color:var(--text-muted);">COLLEGE UPI ID:</div>
+                <div id="payUpiIdText" class="payment-upi-id">garba2026@oksbi</div>
+              </div>
+              <button type="button" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.copyUpiId()">
+                <span>📋</span> Copy
+              </button>
+            </div>
+
+            <!-- Accepted UPI Apps -->
+            <div class="payment-apps-grid">
+              <span class="payment-app-tag">Google Pay</span>
+              <span class="payment-app-tag">PhonePe</span>
+              <span class="payment-app-tag">Paytm</span>
+              <span class="payment-app-tag">BHIM UPI</span>
+              <span class="payment-app-tag">Cred</span>
+            </div>
+
+            <!-- UTR / Reference ID Submission Form -->
+            <form id="paymentVerificationForm" onsubmit="GarbaApp.handlePaymentSubmit(event)">
+              <div class="form-group" style="text-align:left;">
+                <label class="form-label" for="payUtrInput">
+                  12-Digit UPI Reference Number / UTR / Transaction ID <span class="req">*</span>
+                </label>
+                <input type="text" id="payUtrInput" name="utr" class="form-input" placeholder="e.g. 427189012345" required maxlength="30" />
+                <p class="input-hint">Found in your payment app receipt under "UPI Transaction ID" or "UTR / Ref No".</p>
+              </div>
+
+              <div class="form-group" style="text-align:left;">
+                <label class="form-label" for="paySenderName">Payer Name / Registered Mobile (Optional)</label>
+                <input type="text" id="paySenderName" name="senderName" class="form-input" placeholder="e.g. Rahul Sharma / 9876543210" />
+              </div>
+
+              <button type="submit" id="paySubmitBtn" class="btn btn-primary" style="margin-top:6px;">
+                <span>✅</span> Submit Payment for Verification
+              </button>
+
+              <div style="text-align:center; margin-top:14px;">
+                <button type="button" class="btn btn-secondary" style="font-size:0.8rem; padding:6px 12px; width:auto;" onclick="GarbaApp.navigateTo('ticket')">
+                  View Reserved Ticket Pass
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 4: DIGITAL M-TICKET PASS DISPLAY (BOOKMYSHOW STYLE)          -->
+      <!-- ================================================================= -->
+      <section id="view-ticket" class="view-section">
+        <div class="ticket-wrapper">
+          <!-- Real-Time Email Delivery Status Banner -->
+          <div id="ticketEmailNotice" class="alert-box alert-success" style="display:none; margin-bottom:16px;"></div>
+
+          <!-- Payment Pending Notice Banner -->
+          <div id="ticketPaymentPendingNotice" class="alert-box alert-warning" style="display:none; margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+              <div>
+                <div style="font-weight:800; font-size:0.95rem; color:#f59e0b;">⏳ Payment Verification Pending</div>
+                <div style="font-size:0.8rem; color:var(--text-sub);">
+                  Your pass is reserved. Event coordinators are verifying your payment. The QR code unlocks automatically once approved.
+                </div>
+              </div>
+              <button type="button" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem; border-color:#f59e0b; color:#fde68a;" onclick="GarbaApp.navigateTo('payment')">
+                💳 View / Update Payment
+              </button>
+            </div>
+          </div>
+
+          <div id="digitalPassCard" class="digital-pass-card">
+            <!-- Header Band -->
+            <div class="ticket-header-band">
+              <div id="ticketHostCollegeBadge" class="ticket-college-badge">🏛️ KGI GROUP OF INSTITUTIONS • HOST CAMPUS</div>
+              <h2 id="ticketEventNameDisplay" class="dynamic-event-name">KGI GARBA NIGHT 2026</h2>
+              <p><span id="ticketEventDateDisplay" class="dynamic-event-date">16 October 2026</span> • <span id="ticketEventVenueDisplay" class="dynamic-event-venue">Open Air Theatre</span></p>
+            </div>
+
+            <!-- Ticket Body -->
+            <div class="ticket-body">
+              <div id="ticketCategoryPill" class="ticket-category-pill student-pill">STUDENT ENTRY PASS</div>
+
+              <!-- Payment Verification Status Badge -->
+              <div id="ticketPaymentBadge" class="ticket-paid-badge" style="display:none;">✅ PAYMENT VERIFIED & PASS ACTIVE</div>
+
+              <!-- High-Res QR Code Box (Active when Paid/Approved) -->
+              <div id="ticketActiveQrBox" class="ticket-qr-box">
+                <canvas id="ticketQrCanvas" class="ticket-qr-canvas"></canvas>
+              </div>
+
+              <!-- Locked QR Box (Shown when Payment Pending) -->
+              <div id="ticketLockedQrBox" class="ticket-qr-locked-box" style="display:none;">
+                <div class="lock-icon">🔒</div>
+                <div style="font-weight:800; font-size:1.1rem; color:#fde68a; margin-bottom:4px;">QR Entry Pass Locked</div>
+                <div style="font-size:0.82rem; color:var(--text-sub); max-width:280px; margin-bottom:12px;">
+                  Awaiting coordinator payment verification. Once approved, your active QR code will unlock here and be sent to your email.
+                </div>
+                <div id="lockedUtrDisplay" style="font-size:0.78rem; font-family:monospace; background:rgba(0,0,0,0.4); padding:4px 10px; border-radius:6px; color:#38bdf8; margin-bottom:12px;"></div>
+                <button type="button" class="btn btn-secondary" style="width:auto; padding:6px 14px; font-size:0.8rem; border-color:#f59e0b; color:#fde68a;" onclick="GarbaApp.openPaymentModalForCurrentTicket()">
+                  💳 Enter / Update Payment UTR
+                </button>
+              </div>
+
+              <!-- Ticket ID -->
+              <div id="ticketIdDisplay" class="ticket-id-display">STU-GRB-000000</div>
+
+              <!-- Perforated Line -->
+              <div class="ticket-perforation"></div>
+
+              <!-- Details Table -->
+              <div class="ticket-details-table">
+                <div class="ticket-detail-row">
+                  <span class="label">Attendee Name:</span>
+                  <span id="ticketName" class="val">-</span>
+                </div>
+                <div id="ticketCollegeRow" class="ticket-detail-row">
+                  <span class="label">College / Institute:</span>
+                  <span id="ticketCollegeVal" class="val">-</span>
+                </div>
+                <div class="ticket-detail-row">
+                  <span id="ticketIdLabel" class="label">Roll Number:</span>
+                  <span id="ticketIdValue" class="val">-</span>
+                </div>
+                <div class="ticket-detail-row">
+                  <span class="label">Department:</span>
+                  <span id="ticketDepartment" class="val">-</span>
+                </div>
+                <div id="ticketRow4" class="ticket-detail-row">
+                  <span id="ticketRow4Label" class="label">Year / Section:</span>
+                  <span id="ticketRow4Value" class="val">-</span>
+                </div>
+                <div id="ticketPaymentRow" class="ticket-detail-row" style="display:flex;">
+                  <span class="label">Payment Status:</span>
+                  <span id="ticketPaymentStatusVal" class="val" style="font-weight:700;">-</span>
+                </div>
+              </div>
+
+              <!-- Security Warning -->
+              <div class="ticket-security-box">
+                <strong>⚠️ MANDATORY GATE INSTRUCTIONS:</strong>
+                <ul style="padding-left:16px; margin:4px 0 0 0;">
+                  <li>Carry original college ID card / staff ID card for gate verification.</li>
+                  <li>Ticket can be used only once at the gate scanner.</li>
+                  <li>Payment must be verified before entry is permitted.</li>
+                  <li>Entry is strictly non-transferable.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ticket Actions Bar -->
+          <div class="ticket-actions-bar" style="display:flex; flex-direction:column; gap:8px;">
+            <div style="display:flex; gap:8px;">
+              <button id="downloadPassBtn" class="btn btn-primary" onclick="GarbaApp.downloadTicketImage()" style="flex:1;">
+                <span>📥</span> Download (PNG)
+              </button>
+              <button id="printPassBtn" class="btn btn-secondary" onclick="GarbaApp.printTicket()" style="flex:1;">
+                <span>🖨️</span> Print / PDF
+              </button>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary" style="flex:1; border-color:#f59e0b; color:#fde68a;" onclick="GarbaApp.resendEmail(GarbaApp.currentTicket ? GarbaApp.currentTicket.ticketId : '')">
+                <span>📧</span> Resend Email Pass
+              </button>
+              <button class="btn btn-secondary" style="flex:1; border-color:#38bdf8; color:#7dd3fc;" onclick="GarbaApp.openInEmailClient(GarbaApp.currentTicket ? GarbaApp.currentTicket.ticketId : '')">
+                <span>✉️</span> Open Email App
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 5: GATE ENTRY CAMERA SCANNER                                 -->
+      <!-- ================================================================= -->
+      <section id="view-scanner" class="view-section">
+        <div class="scanner-container">
+          <div style="text-align:center; margin-bottom:14px;">
+            <span class="hero-tag" style="background:rgba(16,185,129,0.15); border-color:#10b981; color:#6ee7b7;">GATE VOLUNTEER SCANNER</span>
+            <h2 style="font-size:1.45rem; font-weight:800; margin-top:4px;">Scan Attendee QR Pass</h2>
+            <p style="font-size:0.8rem; color:var(--text-muted);">Point camera at student or teacher digital ticket QR code.</p>
+          </div>
+
+          <!-- Scanner Event Scope Filter -->
+          <div style="margin-bottom:12px; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:12px; padding:10px 14px; text-align:left;">
+            <label class="form-label" for="scannerEventFilterSelect" style="font-size:0.75rem; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">Gate Verification Scope:</label>
+            <select id="scannerEventFilterSelect" class="form-select" style="font-size:0.85rem; padding:8px 12px;" onchange="GarbaApp.onScannerEventFilterChange(this.value)">
+              <option value="ALL">🔍 All Hosted Events & Colleges</option>
+            </select>
+          </div>
+
+          <!-- Camera Viewport Box -->
+          <div class="scanner-viewport-box">
+            <video id="scannerVideo" autoplay muted playsinline></video>
+            <canvas id="scannerCanvas" style="display:none;"></canvas>
+
+            <!-- Viewfinder Overlay -->
+            <div class="scanner-overlay">
+              <div class="scanner-reticle">
+                <div class="scanner-laser"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls Bar -->
+          <div class="scanner-controls-bar">
+            <button id="torchBtn" class="scanner-ctrl-btn" onclick="GarbaApp.toggleTorch()" title="Toggle Flashlight">
+              <span>🔦</span> Torch
+            </button>
+            <button class="scanner-ctrl-btn" onclick="GarbaApp.toggleCameraFlip()" title="Switch Camera">
+              <span>🔄</span> Flip Camera
+            </button>
+            <button class="scanner-ctrl-btn" onclick="GarbaApp.startScanner()" title="Restart Video">
+              <span>▶️</span> Resume
+            </button>
+          </div>
+
+          <!-- Manual Ticket ID Input Fallback -->
+          <div class="manual-input-box">
+            <label class="form-label" style="font-size:0.8rem;">Manual Ticket ID Entry (Low light / Scratched screen)</label>
+            <div class="manual-input-row">
+              <input type="text" id="manualTicketInput" class="form-input" placeholder="e.g. STU-GRB-000001 or TCH-GRB-000001" style="text-transform:uppercase;" />
+              <button class="btn btn-primary" style="width:auto; padding:0 18px;" onclick="GarbaApp.verifyAndProcessTicket(document.getElementById('manualTicketInput').value)">Verify</button>
+            </div>
+          </div>
+
+          <!-- Live Scan Result Card -->
+          <div id="scanResultCard" class="scan-result-card">
+            <div style="text-align:center;">
+              <div id="scanResultBadge" class="scan-result-badge">STATUS</div>
+              <div id="scanResultMsg" style="margin-bottom:14px; font-size:0.95rem;">Message</div>
+            </div>
+
+            <!-- Attendee Information -->
+            <div id="scanAttendeeDetails"></div>
+
+            <!-- Physical ID Cross-Check Checklist -->
+            <div id="scanIdCheckPrompt" class="id-verification-checklist" style="display:none;"></div>
+
+            <!-- Actions Bar -->
+            <div style="display:flex; gap:10px; margin-top:16px;">
+              <button id="confirmAdmitBtn" class="btn btn-success" style="display:none;" onclick="GarbaApp.confirmCheckInEntry()">
+                Allow Entry & Mark USED
+              </button>
+              <button id="nextScanBtn" class="btn btn-secondary" style="display:none;" onclick="GarbaApp.resetScannerView()">
+                Scan Next Ticket
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 6: DEDICATED ADMIN LOGIN (SEPARATE & SECURE)                 -->
+      <!-- ================================================================= -->
+      <section id="view-admin-login" class="view-section">
+        <div class="admin-login-wrapper">
+          <div class="admin-login-card">
+            <div class="admin-lock-icon">🔒</div>
+            <h2 style="font-size:1.5rem; font-weight:800; margin-bottom:6px;">Event Coordinator Login</h2>
+            <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:22px;">Restricted access for authorized college organizers only.</p>
+
+            <!-- Alert Message -->
+            <div id="adminLoginAlert" class="alert-box" style="display:none;"></div>
+
+            <form id="adminLoginForm">
+              <div class="form-group" style="text-align:left;">
+                <label class="form-label" for="loginAdminId">Admin ID</label>
+                <input type="text" id="loginAdminId" name="adminId" class="form-input" placeholder="Enter Admin ID" required autocomplete="username" />
+              </div>
+
+              <div class="form-group" style="text-align:left;">
+                <label class="form-label" for="loginAdminPassword">Admin Password</label>
+                <input type="password" id="loginAdminPassword" name="adminPassword" class="form-input" placeholder="Enter Admin Password" required autocomplete="current-password" />
+              </div>
+
+              <button type="submit" class="btn btn-primary" style="margin-top:10px;">
+                <span>🔓</span>
+                <span>Login to Dashboard</span>
+              </button>
+
+              <button type="button" class="btn btn-secondary" style="margin-top:8px; font-size:0.82rem; padding:8px 12px; border-color:rgba(245,158,11,0.5); color:#fde68a;" onclick="document.getElementById('loginAdminId').value='admin'; document.getElementById('loginAdminPassword').value='garba2026@admin';">
+                <span>⚡</span>
+                <span>Auto-fill Admin Credentials</span>
+              </button>
+            </form>
+
+            <p style="font-size:0.75rem; color:var(--text-muted); margin-top:16px;">
+              Admin ID: <strong style="color:#fde68a;">admin</strong> | Password: <strong style="color:#fde68a;">garba2026@admin</strong>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 7: ADMIN DASHBOARD (RESTRICTED TO LOGGED IN ADMIN)           -->
+      <!-- ================================================================= -->
+      <section id="view-admin" class="view-section">
+        <!-- Admin Header Bar with Logout -->
+        <div class="admin-header-bar">
+          <div class="admin-auth-tag">
+            <span>●</span>
+            <span>Logged in as: Administrator</span>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem; border-color:#e11d48; color:#fda4af;" onclick="GarbaApp.navigateTo('outbox')">
+              📬 Mail Outbox (<span id="adminOutboxBadge">0</span>)
+            </button>
+            <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.navigateTo('settings')">⚙️ Settings</button>
+            <button class="btn-logout" onclick="GarbaApp.handleAdminLogout()">🚪 Logout</button>
+          </div>
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="font-size:1.6rem; font-weight:800;">Organizer Master Dashboard</h2>
+            <p style="font-size:0.82rem; color:var(--text-muted);">Real-time attendee stats, payment verification, and gate check-in controls.</p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-secondary" style="width:auto; padding:8px 14px; font-size:0.8rem; border-color:#10b981; color:#6ee7b7;" onclick="GarbaApp.openHostEventModal()">➕ Host New Event</button>
+            <button class="btn btn-primary" style="width:auto; padding:8px 14px; font-size:0.8rem;" onclick="GarbaApp.refreshDashboard()">↻ Refresh Live Stats</button>
+          </div>
+        </div>
+
+        <!-- Admin Event & College Filter Bar -->
+        <div class="admin-event-filter-bar">
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            <label style="font-size:0.85rem; font-weight:700; color:var(--text-sub);">📌 Managing Event:</label>
+            <select id="adminEventFilterSelect" class="form-select" style="width:auto; min-width:240px; padding:7px 12px; font-size:0.85rem;" onchange="GarbaApp.onAdminEventFilterChange(this.value)">
+              <option value="ALL">🌐 All Hosted Events & Colleges</option>
+            </select>
+          </div>
+          <div style="font-size:0.8rem; color:var(--text-muted);">
+            Switch event to inspect its attendees, gate check-in & CSV export.
+          </div>
+        </div>
+
+        <!-- Overall KPI Cards -->
+        <div class="admin-metrics-grid" style="grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));">
+          <div class="metric-card accent-gold">
+            <div id="statTotalAll" class="metric-val">0</div>
+            <div class="metric-lbl">Total Registered</div>
+          </div>
+          <div class="metric-card accent-green">
+            <div id="statCheckedInAll" class="metric-val" style="color:#10b981;">0</div>
+            <div class="metric-lbl">Total Checked In</div>
+          </div>
+          <div class="metric-card" style="border-top:3px solid #f59e0b; cursor:pointer;" onclick="GarbaApp.filterAdminTable('PAYMENT_PENDING')">
+            <div id="statPendingPaymentsAll" class="metric-val" style="color:#f59e0b;">0</div>
+            <div class="metric-lbl">Pending Payments</div>
+          </div>
+          <div class="metric-card accent-purple">
+            <div id="statRemainingAll" class="metric-val" style="color:#a855f7;">0</div>
+            <div class="metric-lbl">Total Remaining</div>
+          </div>
+        </div>
+
+        <!-- Dedicated Pending Payment Approvals Section -->
+        <div id="pendingPaymentApprovalsCard" class="approvals-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div>
+              <h3 style="font-size:1.05rem; font-weight:800; color:#f59e0b;">💳 Pending Payment Approvals (<span id="pendingApprovalsListCount">0</span>)</h3>
+              <p style="font-size:0.78rem; color:var(--text-muted);">Verify attendee UPI transaction / UTR references to unlock their QR code pass and dispatch entry email.</p>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary" style="width:auto; padding:5px 12px; font-size:0.75rem;" onclick="GarbaApp.approveAllPendingPayments()">
+                ⚡ Approve All Pending
+              </button>
+            </div>
+          </div>
+          <div id="pendingApprovalsTableContainer"></div>
+        </div>
+
+        <!-- Student vs Teacher Summary Row -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+          <!-- Student Stats Card -->
+          <div class="breakdown-card" style="border-top:3px solid var(--primary); margin:0;">
+            <h4 style="color:var(--primary); font-size:0.95rem; margin-bottom:10px;">🎓 STUDENT STATS</h4>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0;">
+              <span style="color:var(--text-muted);">Registered:</span>
+              <strong id="statStudentsTotal">0</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0;">
+              <span style="color:var(--text-muted);">Checked In:</span>
+              <strong id="statStudentsCheckedIn" style="color:#10b981;">0</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0;">
+              <span style="color:var(--text-muted);">Remaining:</span>
+              <strong id="statStudentsRemaining" style="color:#f59e0b;">0</strong>
+            </div>
+          </div>
+
+          <!-- Teacher Stats Card -->
+          <div class="breakdown-card" style="border-top:3px solid var(--accent-blue); margin:0;">
+            <h4 style="color:#38bdf8; font-size:0.95rem; margin-bottom:10px;">👨‍🏫 TEACHER STATS</h4>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0;">
+              <span style="color:var(--text-muted);">Registered:</span>
+              <strong id="statTeachersTotal">0</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0;">
+              <span style="color:var(--text-muted);">Checked In:</span>
+              <strong id="statTeachersCheckedIn" style="color:#10b981;">0</strong>
+            </div>
+            <div style="display:flex; justify-content:space-between; font-size:0.85rem; padding:4px 0;">
+              <span style="color:var(--text-muted);">Remaining:</span>
+              <strong id="statTeachersRemaining" style="color:#38bdf8;">0</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Department Breakdown -->
+        <div class="breakdown-card">
+          <div class="breakdown-header">
+            <h3 class="breakdown-title">Department-wise Registrations</h3>
+            <span style="font-size:0.75rem; color:var(--text-muted);">Students & Teachers</span>
+          </div>
+          <div id="deptBreakdownList"></div>
+        </div>
+
+        <!-- Year & Section Counts Grid -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:20px;">
+          <!-- Year Counts -->
+          <div class="breakdown-card" style="margin:0;">
+            <div class="breakdown-header">
+              <h3 class="breakdown-title" style="font-size:0.9rem;">Year-wise Students</h3>
+            </div>
+            <div id="yearBreakdownList"></div>
+          </div>
+
+          <!-- Section Counts -->
+          <div class="breakdown-card" style="margin:0;">
+            <div class="breakdown-header">
+              <h3 class="breakdown-title" style="font-size:0.9rem;">Section-wise Students</h3>
+            </div>
+            <div id="sectionBreakdownList"></div>
+          </div>
+        </div>
+
+        <!-- Searchable Attendee Table -->
+        <div class="breakdown-card">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:10px;">
+            <h3 class="breakdown-title">Event Attendee Master Records</h3>
+            <div style="display:flex; gap:8px;">
+              <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.exportDataCsv('STUDENTS')">
+                📥 Export Students CSV
+              </button>
+              <button class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.exportDataCsv('TEACHERS')">
+                📥 Export Teachers CSV
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Search & Filter Controls -->
+          <div class="admin-table-controls">
+            <input type="text" id="adminTableSearch" class="form-input admin-search-input" placeholder="Search by name, roll no, staff ID, ticket ID, UTR..." oninput="GarbaApp.renderAdminTable()" />
+            <div class="admin-filter-tabs">
+              <button class="filter-tab-btn active" onclick="GarbaApp.filterAdminTable('ALL', this)">All</button>
+              <button class="filter-tab-btn" onclick="GarbaApp.filterAdminTable('PAYMENT_PENDING', this)">💳 Pending (<span id="pendingTabCount">0</span>)</button>
+              <button class="filter-tab-btn" onclick="GarbaApp.filterAdminTable('STUDENT', this)">Students</button>
+              <button class="filter-tab-btn" onclick="GarbaApp.filterAdminTable('TEACHER', this)">Teachers</button>
+              <button class="filter-tab-btn" onclick="GarbaApp.filterAdminTable('USED', this)">Checked In</button>
+              <button class="filter-tab-btn" onclick="GarbaApp.filterAdminTable('UNUSED', this)">Unused</button>
+            </div>
+          </div>
+
+          <!-- Responsive Table -->
+          <div class="table-responsive-wrapper">
+            <table class="attendee-table">
+              <thead>
+                <tr>
+                  <th>Category</th>
+                  <th>Attendee Name</th>
+                  <th>Roll / Staff ID</th>
+                  <th>Department</th>
+                  <th>Ticket ID</th>
+                  <th>Payment</th>
+                  <th>Gate Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="adminAttendeeTableBody">
+                <!-- Injected via JavaScript -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 8: EVENT SETTINGS (ADMIN AUTHENTICATED)                      -->
+      <!-- ================================================================= -->
+      <section id="view-settings" class="view-section">
+        <div class="form-panel" style="max-width:680px;">
+          <div class="form-header">
+            <span class="form-header-badge" style="background:rgba(255,255,255,0.1); color:#ffffff;">ORGANIZER CONTROLS</span>
+            <h2 class="form-title">Event & Security Settings</h2>
+            <p class="form-subtitle">Configure event parameters, admin credentials, and real email delivery keys.</p>
+          </div>
+
+          <form id="adminSettingsForm">
+            <!-- Event Name -->
+            <div class="form-group">
+              <label class="form-label" for="settingEventName">Event Name</label>
+              <input type="text" id="settingEventName" name="eventName" class="form-input" required />
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+              <!-- Event Date -->
+              <div class="form-group">
+                <label class="form-label" for="settingEventDate">Event Date</label>
+                <input type="text" id="settingEventDate" name="eventDate" class="form-input" required />
+              </div>
+
+              <!-- Venue -->
+              <div class="form-group">
+                <label class="form-label" for="settingVenue">Venue</label>
+                <input type="text" id="settingVenue" name="venue" class="form-input" required />
+              </div>
+            </div>
+
+            <!-- Admin Credentials Setting -->
+            <div style="background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:var(--radius-md); padding:16px; margin-bottom:18px;">
+              <h4 style="font-size:0.95rem; margin-bottom:10px; color:var(--primary);">🔒 Admin Security Credentials</h4>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="settingAdminId">Admin User ID</label>
+                  <input type="text" id="settingAdminId" name="adminId" class="form-input" value="admin" />
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="settingAdminPassword">Admin Password</label>
+                  <input type="text" id="settingAdminPassword" name="adminPassword" class="form-input" value="garba2026@admin" />
+                </div>
+              </div>
+            </div>
+
+            <!-- Registration Controls (Toggles) -->
+            <div style="background:rgba(0,0,0,0.3); border:1px solid var(--border-glass); border-radius:var(--radius-md); padding:16px; margin-bottom:18px;">
+              <h4 style="font-size:0.95rem; margin-bottom:12px; color:var(--primary);">Registration Availability Controls</h4>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">Master Registration Switch</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Close all registrations instantly</div>
+                </div>
+                <input type="checkbox" id="toggleMasterReg" name="registrationOpen" style="width:20px; height:20px;" />
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">Student Registration Open</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Accept student ticket bookings</div>
+                </div>
+                <input type="checkbox" id="toggleStudentReg" name="studentRegistrationOpen" style="width:20px; height:20px;" />
+              </div>
+
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">Teacher / Staff Registration Open</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Accept teacher entry passes</div>
+                </div>
+                <input type="checkbox" id="toggleTeacherReg" name="teacherRegistrationOpen" style="width:20px; height:20px;" />
+              </div>
+            </div>
+
+            <!-- Payment & Ticket Pricing Controls -->
+            <div style="background:rgba(245,158,11,0.06); border:1px solid rgba(245,158,11,0.3); border-radius:var(--radius-md); padding:16px; margin-bottom:18px;">
+              <h4 style="font-size:0.95rem; margin-bottom:10px; color:var(--primary);">💳 Ticket Fee & UPI Payment Verification</h4>
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:12px;">
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="settingTicketFee">Pass Fee (₹)</label>
+                  <input type="number" id="settingTicketFee" name="ticketFee" class="form-input" min="0" step="1" value="150" />
+                </div>
+                <div class="form-group" style="margin-bottom:0;">
+                  <label class="form-label" for="settingUpiId">Event UPI ID</label>
+                  <input type="text" id="settingUpiId" name="upiId" class="form-input" value="garba2026@oksbi" />
+                </div>
+              </div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <div>
+                  <div style="font-weight:600; font-size:0.88rem;">Require Coordinator Payment Approval</div>
+                  <div style="font-size:0.75rem; color:var(--text-muted);">Lock QR entry pass until payment reference/UTR is confirmed by admin</div>
+                </div>
+                <input type="checkbox" id="toggleRequirePayment" name="requirePaymentVerification" style="width:20px; height:20px;" checked />
+              </div>
+            </div>
+
+            <!-- Configurable Departments -->
+            <div class="form-group">
+              <label class="form-label" for="settingDepartments">Configurable Departments (comma-separated)</label>
+              <input type="text" id="settingDepartments" name="departments" class="form-input" />
+              <p class="input-hint">e.g. B.Tech, MBA, B.Pharm, BCA, Nursing, MCA, Polytechnic</p>
+            </div>
+
+            <!-- Configurable Sections -->
+            <div class="form-group">
+              <label class="form-label" for="settingSections">Configurable Sections (comma-separated)</label>
+              <input type="text" id="settingSections" name="sections" class="form-input" />
+              <p class="input-hint">e.g. Section A, Section B, Section C, Section D</p>
+            </div>
+
+            <!-- Google Apps Script Web App Integration -->
+            <div style="background:rgba(2,132,199,0.1); border:1px solid rgba(2,132,199,0.3); border-radius:var(--radius-md); padding:16px; margin-bottom:18px;">
+              <h4 style="font-size:0.95rem; margin-bottom:6px; color:#38bdf8;">Google Apps Script Web App URL</h4>
+              <p style="font-size:0.78rem; color:var(--text-sub); margin-bottom:10px;">Paste your deployed Apps Script URL to sync directly with your Google Sheet central database.</p>
+              
+              <div class="manual-input-row" style="margin-bottom:8px;">
+                <input type="url" id="settingGasUrl" name="gasUrl" class="form-input" placeholder="https://script.google.com/macros/s/AKfycb.../exec" />
+                <button type="button" class="btn btn-secondary" style="width:auto; padding:0 16px; font-size:0.8rem;" onclick="GarbaApp.testGasConnection()">
+                  Test & Connect
+                </button>
+              </div>
+              <p style="font-size:0.72rem; color:var(--text-muted); margin:0;">
+                Leave blank to run on the built-in fast Local Google Sheet simulator. See <code>google-apps-script/README.md</code> for 1-click deployment instructions.
+              </p>
+            </div>
+
+            <div style="display:flex; gap:10px;">
+              <button type="submit" class="btn btn-primary">Save Settings</button>
+              <button type="button" class="btn btn-secondary" style="width:auto;" onclick="GarbaApp.resetToDemoData()">Reset Demo Data</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 9: MY PASS (RETRIEVE BOOKED PASS)                            -->
+      <!-- ================================================================= -->
+      <section id="view-my-pass" class="view-section">
+        <div class="form-panel" style="max-width:560px;">
+          <div class="form-header">
+            <span class="form-header-badge" style="background:rgba(245,158,11,0.15); color:var(--primary);">PASS RETRIEVAL</span>
+            <h2 class="form-title">Find Your Entry Pass</h2>
+            <p class="form-subtitle">Lost your ticket or didn't receive the email? Retrieve your booked pass instantly using your College Roll Number or Staff ID.</p>
+          </div>
+
+          <div class="manual-input-box" style="margin-top:0;">
+            <label class="form-label">Enter Roll Number or Staff ID</label>
+            <div class="manual-input-row">
+              <input type="text" id="myPassQueryInput" class="form-input" placeholder="e.g. 22BT0145 or EMP-7712" style="text-transform:uppercase;" />
+              <button class="btn btn-primary" style="width:auto; padding:0 20px;" onclick="GarbaApp.searchPassByQuery(document.getElementById('myPassQueryInput').value)">Search</button>
+            </div>
+          </div>
+
+          <div style="margin-top:20px; font-size:0.85rem; color:var(--text-muted); line-height:1.5;">
+            <strong>📌 Notes:</strong>
+            <ul style="padding-left:18px; margin-top:6px;">
+              <li>Only registered attendees can retrieve their tickets.</li>
+              <li>You can download your pass as a PNG image or print to PDF anytime once payment is verified.</li>
+              <li>Please keep your pass ready along with your physical College ID card at the entrance gate.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 10: SIMULATED EMAIL OUTBOX (RESTRICTED TO ADMIN)             -->
+      <!-- ================================================================= -->
+      <section id="view-outbox" class="view-section">
+        <div class="form-panel" style="max-width:760px;">
+          <div class="form-header" style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+            <div>
+              <span class="form-header-badge" style="background:rgba(225,29,72,0.15); color:#fda4af;">EMAIL PASS DISPATCH MANAGER</span>
+              <h2 class="form-title" style="margin-top:4px;">Dispatched Email Passes (<span id="outboxTotalCount">0</span>)</h2>
+              <p class="form-subtitle">Inspect digital ticket emails automatically delivered upon approved registration.</p>
+            </div>
+            <div style="display:flex; gap:8px;">
+              <button type="button" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="GarbaApp.clearOutbox()">🗑️ Clear Outbox</button>
+              <button type="button" class="btn btn-primary" style="width:auto; padding:6px 12px; font-size:0.8rem;" onclick="GarbaApp.renderOutboxList()">↻ Refresh</button>
+            </div>
+          </div>
+
+          <div id="outboxItemList"></div>
+
+          <div style="text-align:center; margin-top:20px;">
+            <button class="btn btn-secondary" onclick="GarbaApp.navigateTo('admin')">← Back to Admin Dashboard</button>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- Bottom Mobile Navigation Bar -->
+    <nav class="mobile-nav-bar">
+      <a href="#home" class="nav-item-btn" data-view="home">
+        <svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        <span>Events</span>
+      </a>
+
+      <a href="#event" class="nav-item-btn" data-view="event">
+        <svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V10h14v10zm0-12H5V6h14v2zm-7 5h5v5h-5z"/></svg>
+        <span>Garba Pass</span>
+      </a>
+
+      <!-- Prominent Gate Scanner FAB -->
+      <a href="#scanner" class="nav-item-btn nav-scanner-prominent" data-view="scanner">
+        <div class="scanner-fab">
+          <svg viewBox="0 0 24 24" style="width:28px; height:28px;"><path d="M4 4h4v2H4v4H2V4c0-1.1.9-2 2-2zm16-2c1.1 0 2 .9 2 2v6h-2V6h-4V4h4zM4 20H8v2H4c-1.1 0-2-.9-2-2v-4h2v4zm16 2c1.1 0 2-.9 2-2v-4h-2v4h-4v2h4zM7 7h4v4H7zm6 0h4v4h-4zm-6 6h4v4H7zm6 0h4v4h-4z"/></svg>
+        </div>
+        <span>Scanner</span>
+      </a>
+
+      <a href="#my-pass" class="nav-item-btn" data-view="my-pass">
+        <svg viewBox="0 0 24 24"><path d="M22 10V6c0-1.11-.9-2-2-2H4c-1.1 0-1.99.89-1.99 2v4c1.1 0 1.99.9 1.99 2s-.89 2-2 2v4c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2v-4c-1.1 0-2-.9-2-2s.9-2 2-2zm-2-1.46c-1.19.69-2 1.99-2 3.46s.81 2.77 2 3.46V18H4v-2.54c1.19-.69 2-1.99 2-3.46 0-1.48-.8-2.77-1.99-3.46L4 6h16v2.54z"/></svg>
+        <span>My Pass</span>
+      </a>
+
+      <!-- Admin Tab: Always visible in bottom navigation -->
+      <a href="#admin-login" id="bottomNavAdminBtn" class="nav-item-btn" data-view="admin-login">
+        <svg viewBox="0 0 24 24"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+        <span>Admin</span>
+      </a>
+    </nav>
+
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: EMAIL PASS PREVIEW                                             -->
+  <!-- ===================================================================== -->
+  <div id="emailPreviewModal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">📧 Dispatched Email Entry Pass</h3>
+        <button class="modal-close-btn" onclick="GarbaApp.closeEmailModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="emailModalContent"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: ATTENDEE DETAIL & MANUAL STATUS OVERRIDE                       -->
+  <!-- ===================================================================== -->
+  <div id="attendeeDetailModal" class="modal-backdrop">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h3 class="modal-title">Attendee Record Details</h3>
+        <button class="modal-close-btn" onclick="GarbaApp.closeAttendeeModal()">×</button>
+      </div>
+      <div class="modal-body">
+        <div id="attendeeModalBody"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================================================================== -->
+  <!-- MODAL: HOST COLLEGE EVENT (FOR ANY COLLEGE / CLUB / DEPT)             -->
+  <!-- ===================================================================== -->
+  <div id="hostEventModal" class="modal-backdrop">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-header">
+        <div>
+          <span style="font-size:0.72rem; font-weight:800; color:#10b981; letter-spacing:1px; text-transform:uppercase;">🏛️ Open Campus Event Hosting</span>
+          <h3 class="modal-title" style="margin-top:2px;">Host an Event for Your College</h3>
+        </div>
+        <button class="modal-close-btn" onclick="GarbaApp.closeHostEventModal()">×</button>
+      </div>
+      <div class="modal-body modal-body-scroll">
+        <!-- Quick Template Preset Bar -->
+        <div style="margin-bottom:16px;">
+          <label style="font-size:0.75rem; font-weight:700; color:var(--text-muted); text-transform:uppercase;">⚡ Quick Auto-Fill Event Templates:</label>
+          <div class="template-pills-bar" style="margin-top:6px;">
+            <button type="button" class="template-preset-btn" onclick="GarbaApp.prefillHostForm('TECH')">💻 24hr Hackathon</button>
+            <button type="button" class="template-preset-btn" onclick="GarbaApp.prefillHostForm('CULTURAL')">🪔 Cultural Dandiya Night</button>
+            <button type="button" class="template-preset-btn" onclick="GarbaApp.prefillHostForm('MUSIC')">🎸 Campus Rock & EDM Fest</button>
+            <button type="button" class="template-preset-btn" onclick="GarbaApp.prefillHostForm('SPORTS')">🏆 Inter-College Sports Carnival</button>
+            <button type="button" class="template-preset-btn" onclick="GarbaApp.prefillHostForm('ACADEMIC')">🔬 Robotics & AI Workshop</button>
+          </div>
+        </div>
+
+        <form id="hostEventForm" onsubmit="GarbaApp.handleHostEventSubmit(event)" novalidate>
+          <div class="host-event-form-grid">
+            <!-- 1. Hosting College Name -->
+            <div class="form-group form-full-width">
+              <label class="form-label" for="hostCollegeName">Hosting College / University Name <span class="req">*</span></label>
+              <input type="text" id="hostCollegeName" name="collegeName" class="form-input" placeholder="e.g. IIT Delhi, SRM University, St. Xavier's, KGI..." required />
+              <p class="input-hint">Any college in India or worldwide can host events on BOOKKRO.</p>
+            </div>
+
+            <!-- 2. College Acronym / Code -->
+            <div class="form-group">
+              <label class="form-label" for="hostCollegeCode">College Short Code / Acronym <span class="req">*</span></label>
+              <input type="text" id="hostCollegeCode" name="collegeCode" class="form-input" placeholder="e.g. IITD, SRM, SXC, DU, KGI" maxlength="6" style="text-transform:uppercase;" required />
+              <p class="input-hint">Used for ticket ID prefixes (e.g. STU-IITD-XXXXXX).</p>
+            </div>
+
+            <!-- 3. Organizing Club / Department -->
+            <div class="form-group">
+              <label class="form-label" for="hostClubName">Organizing Club / Society / Department <span class="req">*</span></label>
+              <input type="text" id="hostClubName" name="hostClub" class="form-input" placeholder="e.g. IEEE Student Chapter / Cultural Council" required />
+            </div>
+
+            <!-- 4. Event Title -->
+            <div class="form-group form-full-width">
+              <label class="form-label" for="hostEventTitle">Event Name / Festival Title <span class="req">*</span></label>
+              <input type="text" id="hostEventTitle" name="title" class="form-input" placeholder="e.g. HackMatrix 2026 / Spardha Athletic Meet / Dandiya Dhoom" required />
+            </div>
+
+            <!-- 5. Event Tagline -->
+            <div class="form-group form-full-width">
+              <label class="form-label" for="hostEventTagline">Short Tagline / Catchphrase</label>
+              <input type="text" id="hostEventTagline" name="tagline" class="form-input" placeholder="e.g. 24 Hours of Innovation, AI & Building" />
+            </div>
+
+            <!-- 6. Category -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventCategory">Event Category <span class="req">*</span></label>
+              <select id="hostEventCategory" name="category" class="form-select" required>
+                <option value="CULTURAL">🪔 Cultural & Festive</option>
+                <option value="TECH">💻 Technical & Hackathons</option>
+                <option value="SPORTS">🏆 Sports & Tournaments</option>
+                <option value="MUSIC">🎸 Music, Concert & EDM</option>
+                <option value="ACADEMIC">🔬 Conference, Seminar & Workshop</option>
+              </select>
+            </div>
+
+            <!-- 7. Banner Theme Style -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventTheme">Visual Banner Theme</label>
+              <select id="hostEventTheme" name="themeColor" class="form-select">
+                <option value="#f59e0b">✨ Festive Gold & Marigold</option>
+                <option value="#0284c7">💻 Cyber Indigo & Tech Blue</option>
+                <option value="#10b981">🏆 Emerald Green & Turf</option>
+                <option value="#e11d48">🎸 Electric Ruby & Crimson</option>
+                <option value="#8b5cf6">🌌 Neon Purple & Violet</option>
+              </select>
+            </div>
+
+            <!-- 8. Event Date -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventDate">Event Date(s) <span class="req">*</span></label>
+              <input type="text" id="hostEventDate" name="date" class="form-input" placeholder="e.g. 15 November 2026 or 12-14 Dec 2026" required />
+            </div>
+
+            <!-- 9. Event Time -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventTime">Timing & Schedule <span class="req">*</span></label>
+              <input type="text" id="hostEventTime" name="time" class="form-input" placeholder="e.g. 6:00 PM – 11:30 PM" required />
+            </div>
+
+            <!-- 10. Venue -->
+            <div class="form-group form-full-width">
+              <label class="form-label" for="hostEventVenue">Venue / Campus Location <span class="req">*</span></label>
+              <input type="text" id="hostEventVenue" name="venue" class="form-input" placeholder="e.g. Main Auditorium / Sports Complex Ground / Seminar Hall 3" required />
+            </div>
+
+            <!-- 11. Eligibility -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventEligibility">Eligibility Scope <span class="req">*</span></label>
+              <select id="hostEventEligibility" name="eligibility" class="form-select">
+                <option value="Enrolled Host College Students & Faculty Only">🏫 Enrolled Host College Students & Staff Only</option>
+                <option value="Open to All College & University Students">🌐 Open to All Colleges (Inter-College Event)</option>
+              </select>
+            </div>
+
+            <!-- 12. Ticket Pass Fee Type -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventFeeType">Pass Fee Type <span class="req">*</span></label>
+              <select id="hostEventFeeType" name="feeType" class="form-select" onchange="GarbaApp.toggleHostFeeFields(this.value)">
+                <option value="FREE">🎟️ Free Entry Pass</option>
+                <option value="PAID">💳 Paid Pass (UPI Verification)</option>
+              </select>
+            </div>
+
+            <!-- 13. Fee Amount & UPI ID (Conditional) -->
+            <div id="hostFeeFieldsRow" class="form-group form-full-width" style="display:none; background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.3); border-radius:12px; padding:14px;">
+              <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+                <div>
+                  <label class="form-label" for="hostFeeAmount">Pass Fee Amount (₹)</label>
+                  <input type="number" id="hostFeeAmount" name="feeAmount" class="form-input" placeholder="e.g. 150" min="10" />
+                </div>
+                <div>
+                  <label class="form-label" for="hostUpiId">Organizer UPI ID</label>
+                  <input type="text" id="hostUpiId" name="upiId" class="form-input" placeholder="e.g. event@okhdfcbank" />
+                </div>
+              </div>
+            </div>
+
+            <!-- 14. Event Description -->
+            <div class="form-group form-full-width">
+              <label class="form-label" for="hostEventDesc">Event Description & Highlights <span class="req">*</span></label>
+              <textarea id="hostEventDesc" name="description" class="form-input" rows="3" placeholder="Provide a compelling description of what attendees can expect, rules, attractions, competitions, dress code, etc." required></textarea>
+            </div>
+
+            <!-- 15. Key Tags -->
+            <div class="form-group">
+              <label class="form-label" for="hostEventTags">Key Highlights / Tags (comma separated)</label>
+              <input type="text" id="hostEventTags" name="tags" class="form-input" placeholder="e.g. Live DJ, Cash Prizes, Certificates, Free Food" />
+            </div>
+
+            <!-- 16. Host Organizer Email -->
+            <div class="form-group">
+              <label class="form-label" for="hostOrganizerEmail">Organizer Contact Email <span class="req">*</span></label>
+              <input type="email" id="hostOrganizerEmail" name="hostEmail" class="form-input" placeholder="e.g. fest@college.edu or personal gmail" required />
+            </div>
+          </div>
+
+          <!-- Publish Action Buttons -->
+          <div style="display:flex; justify-content:flex-end; gap:12px; margin-top:20px; border-top:1px solid rgba(255,255,255,0.1); padding-top:16px;">
+            <button type="button" class="btn btn-secondary" style="width:auto; padding:10px 20px;" onclick="GarbaApp.closeHostEventModal()">Cancel</button>
+            <button type="submit" class="btn btn-primary" style="width:auto; padding:10px 26px; font-weight:800; background:linear-gradient(135deg, #10b981 0%, #059669 100%); border-color:#34d399;">
+              <span>🚀</span>
+              <span>Publish College Event</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- CDN jsQR Fallback Loader for Universal Camera Decoding -->
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+
+  <!-- Core App Scripts -->
+  <script src="js/qr-code.js"></script>
+  <script src="js/scanner.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Outbox & Routing Helpers -->
+  <script>
+    window.addEventListener('hashchange', function() {
+      if (window.location.hash === '#outbox' && window.GarbaApp) {
+        GarbaApp.renderOutboxList();
+      }
+    });
+  </script>
+
+</body>
+</html>
