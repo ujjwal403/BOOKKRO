@@ -1,6 +1,6 @@
 /**
- * KGI Garba Night 2026 - Main Application Logic & State Controller
- * Fully integrated: Local Google Sheets Simulator + Live Google Apps Script Bridge
+ * BOOKKRO - Universal College Events & Entry Pass Portal
+ * State Controller, Multi-Tenant Engine & QR Gate Verification
  */
 
 (function(window) {
@@ -10,20 +10,20 @@
   // DEFAULT CONFIGURATION & SEED DATABASE
   // =========================================================================
   var DEFAULT_SETTINGS = {
-    eventName: 'KGI Garba Night 2026',
+    eventName: 'National Campus Cultural Fest 2026',
     eventDate: '16 October 2026',
-    venue: 'Open Air Theatre',
+    venue: 'Main Campus Open Air Theatre',
     registrationOpen: true,
     studentRegistrationOpen: true,
     teacherRegistrationOpen: true,
-    departments: ['B.Tech', 'MBA', 'B.Pharm', 'BCA', 'Nursing', 'MCA', 'Polytechnic'],
+    departments: ['Computer Science', 'Mechanical', 'Electrical', 'Civil', 'Electronics', 'Management', 'Sciences'],
     years: ['1st Year', '2nd Year', '3rd Year', '4th Year'],
     sections: ['Section A', 'Section B', 'Section C', 'Section D'],
     gasWebAppUrl: '',
     adminId: 'admin',
-    adminPassword: 'garba2026@admin',
+    adminPassword: 'bookkro2026@admin',
     ticketFee: 150,
-    upiId: 'garba2026@oksbi',
+    upiId: 'fest2026@oksbi',
     requirePaymentVerification: true,
     emailJsServiceId: '',
     emailJsTemplateId: '',
@@ -33,30 +33,30 @@
   // Seed Events across multiple prestigious colleges
   var DEFAULT_EVENTS = [
     {
-      id: 'kgi-garba-2026',
-      collegeId: 'kgi',
-      collegeName: 'KGI Group of Institutions',
-      collegeBadge: '🪔 KGI Group',
-      collegeLogo: '🪔',
-      codePrefix: 'GRB',
-      title: 'KGI Garba Night 2026',
-      tagline: 'The Grandest Navratri Dandiya & Cultural Raas Celebration',
+      id: 'nit-cult-2026',
+      collegeId: 'nit',
+      collegeName: 'National Institute of Technology',
+      collegeBadge: '🎭 NIT Campus',
+      collegeLogo: '🏛️',
+      codePrefix: 'NIT',
+      title: 'National Campus Cultural Fest 2026',
+      tagline: 'Annual Multi-College Raas, Dance & Music Extravaganza',
       category: 'CULTURAL',
       date: '16 October 2026',
       time: '6:00 PM – 11:30 PM',
-      venue: 'Open Air Theatre, KGI Campus',
-      eligibility: 'Enrolled College Students & Faculty Only',
+      venue: 'Main Campus Open Air Theatre',
+      eligibility: 'All Enrolled College Students & Faculty',
       ticketType: 'FREE',
       feeAmount: 0,
-      upiId: 'garba2026@oksbi',
-      description: 'The biggest cultural night of the year! Live traditional dhol rhythms, DJ sets, authentic Dandiya celebration, food stalls, and festive dress code for college students & staff.',
-      tags: ['Dandiya Raas', 'Live DJ & Dhol', 'Festive Attire', 'Food Stalls'],
+      upiId: 'fest2026@oksbi',
+      description: 'The premier inter-college cultural festival! Live bands, traditional dance performances, DJ night, food street, and open invitation to students across all accredited institutions.',
+      tags: ['Live Band', 'Cultural Dance', 'Food Stalls', 'Open Inter-College'],
       rating: '4.9 / 5',
-      interestedCount: '2,850+ College Attendees',
+      interestedCount: '3,200+ College Attendees',
       themeColor: '#f59e0b',
       status: 'LIVE',
-      hostClub: 'Cultural Committee & Student Council',
-      hostEmail: 'garba@kgi.edu'
+      hostClub: 'Inter-College Cultural Council',
+      hostEmail: 'cultural@nit.edu'
     },
     {
       id: 'iitb-techfusion-2026',
@@ -189,13 +189,13 @@
     },
     {
       registrationTime: '2026-09-24 12:40:00',
-      name: 'Ujjwal Tiwari',
+      name: 'Aarav Sharma',
       rollNumber: '24BT0888',
-      department: 'B.Tech',
+      department: 'Computer Science',
       year: '3rd Year',
       section: 'Section A',
-      email: 'lewova8445@kingdais.com',
-      ticketId: 'STU-GRB-000004',
+      email: 'aarav.sharma@example.edu',
+      ticketId: 'STU-NIT-000004',
       status: 'UNUSED',
       paymentStatus: 'PAID',
       feeAmount: 150,
@@ -262,7 +262,7 @@
   var GarbaApp = {
     settings: DEFAULT_SETTINGS,
     events: [],
-    currentEventId: 'kgi-garba-2026',
+    currentEventId: 'nit-cult-2026',
     selectedCollegeFilter: 'ALL',
     selectedCategoryFilter: 'ALL',
     searchQuery: '',
@@ -324,46 +324,22 @@
           }
         }, this);
 
-        var savedSettings = localStorage.getItem('kgi_garba_settings');
+        var savedSettings = localStorage.getItem('bookkro_settings');
         if (savedSettings) {
           this.settings = Object.assign({}, DEFAULT_SETTINGS, JSON.parse(savedSettings));
         }
 
-        this.isAdminLoggedIn = (sessionStorage.getItem('kgi_admin_auth') === 'true');
+        this.isAdminLoggedIn = (sessionStorage.getItem('bookkro_admin_auth') === 'true');
 
-        var savedStudents = localStorage.getItem('kgi_garba_students');
+        var savedStudents = localStorage.getItem('bookkro_students');
         if (savedStudents) {
           this.students = JSON.parse(savedStudents);
-          // Ensure lewova8445 record exists for instant testing
-          var hasUser = this.students.some(function(s) {
-            return s.email === 'lewova8445@kingdais.com' || s.ticketId === 'STU-GRB-000004';
-          });
-          if (!hasUser) {
-            this.students.push({
-              registrationTime: '2026-09-24 12:40:00',
-              name: 'Ujjwal Tiwari',
-              collegeName: 'KGI Group of Institutions',
-              eventId: 'kgi-garba-2026',
-              eventName: 'KGI Garba Night 2026',
-              hostingCollege: 'KGI Group of Institutions',
-              rollNumber: '24BT0888',
-              department: 'B.Tech',
-              year: '3rd Year',
-              section: 'Section A',
-              email: 'lewova8445@kingdais.com',
-              ticketId: 'STU-GRB-000004',
-              status: 'UNUSED',
-              ticketCreated: '2026-09-24 12:40:00',
-              checkinTime: ''
-            });
-            this.saveStudents();
-          }
         } else {
           this.students = JSON.parse(JSON.stringify(INITIAL_STUDENTS));
           this.saveStudents();
         }
 
-        var savedTeachers = localStorage.getItem('kgi_garba_teachers');
+        var savedTeachers = localStorage.getItem('bookkro_teachers');
         if (savedTeachers) {
           this.teachers = JSON.parse(savedTeachers);
         } else {
@@ -371,7 +347,7 @@
           this.saveTeachers();
         }
 
-        var savedOutbox = localStorage.getItem('kgi_garba_outbox');
+        var savedOutbox = localStorage.getItem('bookkro_outbox');
         if (savedOutbox) {
           this.emailOutbox = JSON.parse(savedOutbox);
         }
@@ -385,23 +361,23 @@
     },
 
     saveSettings: function() {
-      localStorage.setItem('kgi_garba_settings', JSON.stringify(this.settings));
+      localStorage.setItem('bookkro_settings', JSON.stringify(this.settings));
       this.updateBackendBadge();
       this.renderSettingsDropdowns();
     },
 
     saveStudents: function() {
-      localStorage.setItem('kgi_garba_students', JSON.stringify(this.students));
+      localStorage.setItem('bookkro_students', JSON.stringify(this.students));
       this.refreshDashboard();
     },
 
     saveTeachers: function() {
-      localStorage.setItem('kgi_garba_teachers', JSON.stringify(this.teachers));
+      localStorage.setItem('bookkro_teachers', JSON.stringify(this.teachers));
       this.refreshDashboard();
     },
 
     saveOutbox: function() {
-      localStorage.setItem('kgi_garba_outbox', JSON.stringify(this.emailOutbox));
+      localStorage.setItem('bookkro_outbox', JSON.stringify(this.emailOutbox));
       this.updateOutboxBadge();
     },
 
@@ -475,11 +451,11 @@
       var inputPass = (form.adminPassword.value || '').trim();
 
       var expectedId = this.settings.adminId || 'admin';
-      var expectedPass = this.settings.adminPassword || 'garba2026@admin';
+      var expectedPass = this.settings.adminPassword || 'bookkro2026@admin';
 
       if (inputId === expectedId && inputPass === expectedPass) {
         this.isAdminLoggedIn = true;
-        sessionStorage.setItem('kgi_admin_auth', 'true');
+        sessionStorage.setItem('bookkro_admin_auth', 'true');
         form.reset();
         this.updateAdminNavigationUI();
         this.showToast('🎉 Logged in as Organizer Administrator!');
@@ -495,7 +471,7 @@
 
     handleAdminLogout: function() {
       this.isAdminLoggedIn = false;
-      sessionStorage.removeItem('kgi_admin_auth');
+      sessionStorage.removeItem('bookkro_admin_auth');
       this.updateAdminNavigationUI();
       this.showToast('Logged out of Organizer Portal');
       window.location.hash = 'home';
@@ -956,11 +932,11 @@
 
       // Prefill College Name fields with Host College as default
       var stuCollegeInput = document.getElementById('studentCollegeName');
-      if (stuCollegeInput && (!stuCollegeInput.value || stuCollegeInput.value === 'KGI Group of Institutions')) {
+      if (stuCollegeInput && (!stuCollegeInput.value || stuCollegeInput.value === 'National Institute of Technology')) {
         stuCollegeInput.value = evt.collegeName;
       }
       var tchCollegeInput = document.getElementById('teacherCollegeName');
-      if (tchCollegeInput && (!tchCollegeInput.value || tchCollegeInput.value === 'KGI Group of Institutions')) {
+      if (tchCollegeInput && (!tchCollegeInput.value || tchCollegeInput.value === 'National Institute of Technology')) {
         tchCollegeInput.value = evt.collegeName;
       }
     },
@@ -1370,7 +1346,7 @@
         if (this.settings.gasWebAppUrl) {
           result = await this.callGasBackend({
             action: 'registerStudent',
-            eventId: currentEvent ? currentEvent.id : 'kgi-garba-2026',
+            eventId: currentEvent ? currentEvent.id : 'nit-cult-2026',
             eventName: eventTitle,
             hostingCollege: hostCollege,
             collegeName: collegeName,
@@ -1384,7 +1360,7 @@
         } else {
           await new Promise(function(resolve) { setTimeout(resolve, 350); });
           result = this.localRegisterStudent({
-            eventId: currentEvent ? currentEvent.id : 'kgi-garba-2026',
+            eventId: currentEvent ? currentEvent.id : 'nit-cult-2026',
             eventName: eventTitle,
             hostingCollege: hostCollege,
             collegeName: collegeName,
@@ -1437,14 +1413,14 @@
 
     localRegisterStudent: function(data) {
       var currentEvent = this.getCurrentEvent();
-      var eventId = data.eventId || (currentEvent ? currentEvent.id : 'kgi-garba-2026');
-      var codePrefix = (currentEvent && currentEvent.codePrefix) ? currentEvent.codePrefix : 'GRB';
+      var eventId = data.eventId || (currentEvent ? currentEvent.id : 'nit-cult-2026');
+      var codePrefix = (currentEvent && currentEvent.codePrefix) ? currentEvent.codePrefix : 'NIT';
       var prefix = 'STU-' + codePrefix + '-';
 
       // Duplicate check: Roll Number must be unique FOR THIS SPECIFIC EVENT
       for (var i = 0; i < this.students.length; i++) {
         var s = this.students[i];
-        var sEventId = s.eventId || 'kgi-garba-2026';
+        var sEventId = s.eventId || 'nit-cult-2026';
         if (sEventId === eventId && s.rollNumber.toUpperCase() === data.rollNumber.toUpperCase()) {
           return {
             success: false,
@@ -1540,7 +1516,7 @@
         if (this.settings.gasWebAppUrl) {
           result = await this.callGasBackend({
             action: 'registerTeacher',
-            eventId: currentEvent ? currentEvent.id : 'kgi-garba-2026',
+            eventId: currentEvent ? currentEvent.id : 'nit-cult-2026',
             eventName: eventTitle,
             hostingCollege: hostCollege,
             collegeName: collegeName,
@@ -1554,7 +1530,7 @@
         } else {
           await new Promise(function(resolve) { setTimeout(resolve, 350); });
           result = this.localRegisterTeacher({
-            eventId: currentEvent ? currentEvent.id : 'kgi-garba-2026',
+            eventId: currentEvent ? currentEvent.id : 'nit-cult-2026',
             eventName: eventTitle,
             hostingCollege: hostCollege,
             collegeName: collegeName,
@@ -1607,14 +1583,14 @@
 
     localRegisterTeacher: function(data) {
       var currentEvent = this.getCurrentEvent();
-      var eventId = data.eventId || (currentEvent ? currentEvent.id : 'kgi-garba-2026');
-      var codePrefix = (currentEvent && currentEvent.codePrefix) ? currentEvent.codePrefix : 'GRB';
+      var eventId = data.eventId || (currentEvent ? currentEvent.id : 'nit-cult-2026');
+      var codePrefix = (currentEvent && currentEvent.codePrefix) ? currentEvent.codePrefix : 'NIT';
       var prefix = 'TCH-' + codePrefix + '-';
 
       // Duplicate check: Staff ID must be unique FOR THIS SPECIFIC EVENT
       for (var i = 0; i < this.teachers.length; i++) {
         var t = this.teachers[i];
-        var tEventId = t.eventId || 'kgi-garba-2026';
+        var tEventId = t.eventId || 'nit-cult-2026';
         if (tEventId === eventId && t.staffId.toUpperCase() === data.staffId.toUpperCase()) {
           return {
             success: false,
@@ -1697,7 +1673,7 @@
               'Accept': 'application/json'
             },
             body: JSON.stringify({
-              _subject: '🎉 KGI Garba Night 2026 Entry Pass [' + ticket.ticketId + ']',
+              _subject: '🎉 ' + (ticket.eventName || this.settings.eventName || 'College Event') + ' Entry Pass [' + ticket.ticketId + ']',
               Event: this.settings.eventName,
               Date: this.settings.eventDate,
               Venue: this.settings.venue,
@@ -1770,7 +1746,7 @@
       var idInfo = isStudent ? ('Roll No: ' + attendee.rollNumber) : ('Staff ID: ' + attendee.staffId);
       var subject = encodeURIComponent('Your ' + this.settings.eventName + ' Entry Pass [' + attendee.ticketId + ']');
       var body = encodeURIComponent(
-        'KGI GARBA NIGHT 2026 - OFFICIAL ENTRY PASS\n' +
+        'COLLEGE EVENT - OFFICIAL ENTRY PASS\n' +
         '-------------------------------------------\n' +
         'Event: ' + this.settings.eventName + '\n' +
         'Date: ' + this.settings.eventDate + '\n' +
@@ -1915,7 +1891,7 @@
 
       // Multi-College Dynamic Event Branding
       var ev = (ticket.eventId && this.events) ? this.events.find(function(e) { return e.id === ticket.eventId; }) : null;
-      var hostCollege = ticket.hostingCollege || (ev ? ev.collegeName : 'KGI Group of Institutions');
+      var hostCollege = ticket.hostingCollege || (ev ? ev.collegeName : 'National Institute of Technology');
       var eventTitle = ticket.eventName || (ev ? ev.title : 'College Event 2026');
       var eventDate = ticket.eventDate || (ev ? ev.date : 'Upcoming 2026');
       var eventVenue = ticket.eventVenue || (ev ? ev.venue : 'Main Campus Auditorium');
@@ -2624,7 +2600,7 @@
       // Check Gate Event Scope
       var self = this;
       if (this.scannerTargetEvent && this.scannerTargetEvent !== 'ALL') {
-        var attEvId = attendee.eventId || 'kgi-garba-2026';
+        var attEvId = attendee.eventId || 'nit-cult-2026';
         if (attEvId !== this.scannerTargetEvent) {
           var targetEv = (this.events || []).find(function(e) { return e.id === self.scannerTargetEvent; });
           var targetName = targetEv ? targetEv.title : self.scannerTargetEvent;
@@ -2944,8 +2920,8 @@
       var activeTeachers = this.teachers;
 
       if (eventFilter !== 'ALL') {
-        activeStudents = activeStudents.filter(function(s) { return (s.eventId || 'kgi-garba-2026') === eventFilter; });
-        activeTeachers = activeTeachers.filter(function(t) { return (t.eventId || 'kgi-garba-2026') === eventFilter; });
+        activeStudents = activeStudents.filter(function(s) { return (s.eventId || 'nit-cult-2026') === eventFilter; });
+        activeTeachers = activeTeachers.filter(function(t) { return (t.eventId || 'nit-cult-2026') === eventFilter; });
       }
 
       // Students
@@ -3074,7 +3050,7 @@
 
       if (filterCategory === 'ALL' || filterCategory === 'STUDENT') {
         this.students.forEach(function(s) {
-          if (eventFilter === 'ALL' || (s.eventId || 'kgi-garba-2026') === eventFilter) {
+          if (eventFilter === 'ALL' || (s.eventId || 'nit-cult-2026') === eventFilter) {
             combined.push(Object.assign({ category: 'STUDENT', idNum: s.rollNumber, metaCol: s.year + ' (' + s.section + ')' }, s));
           }
         });
@@ -3082,7 +3058,7 @@
 
       if (filterCategory === 'ALL' || filterCategory === 'TEACHER') {
         this.teachers.forEach(function(t) {
-          if (eventFilter === 'ALL' || (t.eventId || 'kgi-garba-2026') === eventFilter) {
+          if (eventFilter === 'ALL' || (t.eventId || 'nit-cult-2026') === eventFilter) {
             combined.push(Object.assign({ category: 'TEACHER', idNum: t.staffId, metaCol: t.designation }, t));
           }
         });
@@ -3274,7 +3250,7 @@
         csv = 'Registration Time,Event,Host College,Attendee College,Name,Roll Number,Department,Year,Section,Email,Ticket ID,Ticket Status,Payment Status,Check-in Time\n';
         var list = this.students;
         if (eventFilter !== 'ALL') {
-          list = list.filter(function(s) { return (s.eventId || 'kgi-garba-2026') === eventFilter; });
+          list = list.filter(function(s) { return (s.eventId || 'nit-cult-2026') === eventFilter; });
         }
         list.forEach(function(s) {
           csv += '"' + s.registrationTime + '","' + (s.eventName || 'Event') + '","' + (s.hostingCollege || 'Host') + '","' + (s.collegeName || '') + '","' + s.name + '","' + s.rollNumber + '","' + s.department + '","' + s.year + '","' + s.section + '","' + s.email + '","' + s.ticketId + '","' + s.status + '","' + (s.paymentStatus || 'PAID') + '","' + (s.checkinTime || '') + '"\n';
@@ -3284,7 +3260,7 @@
         csv = 'Registration Time,Event,Host College,Attendee College,Name,Employee / Staff ID,Department,Designation,Email,Mobile Number,Ticket ID,Ticket Status,Payment Status,Check-in Time\n';
         var tList = this.teachers;
         if (eventFilter !== 'ALL') {
-          tList = tList.filter(function(t) { return (t.eventId || 'kgi-garba-2026') === eventFilter; });
+          tList = tList.filter(function(t) { return (t.eventId || 'nit-cult-2026') === eventFilter; });
         }
         tList.forEach(function(t) {
           csv += '"' + t.registrationTime + '","' + (t.eventName || 'Event') + '","' + (t.hostingCollege || 'Host') + '","' + (t.collegeName || '') + '","' + t.name + '","' + t.staffId + '","' + t.department + '","' + t.designation + '","' + t.email + '","' + (t.mobile || '') + '","' + t.ticketId + '","' + t.status + '","' + (t.paymentStatus || 'PAID') + '","' + (t.checkinTime || '') + '"\n';
@@ -3305,7 +3281,7 @@
       e.preventDefault();
       var form = e.target;
 
-      this.settings.eventName = form.eventName.value.trim() || 'KGI Garba Night 2026';
+      this.settings.eventName = form.eventName.value.trim() || 'National Campus Cultural Fest 2026';
       this.settings.eventDate = form.eventDate.value.trim() || '16 October 2026';
       this.settings.venue = form.venue.value.trim() || 'Open Air Theatre';
       this.settings.gasWebAppUrl = form.gasUrl.value.trim();

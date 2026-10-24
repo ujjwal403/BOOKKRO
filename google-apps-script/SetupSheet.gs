@@ -1,14 +1,14 @@
 /**
  * ==============================================================================
- * KGI GARBA NIGHT 2026 - GOOGLE SHEETS 1-CLICK AUTO-SETUP SCRIPT
+ * BOOKKRO COLLEGE EVENTS - GOOGLE SHEETS 1-CLICK AUTO-SETUP SCRIPT
  * ==============================================================================
- * Run this function ONCE from Apps Script editor (`setupGarbaDatabase`).
+ * Run this function ONCE from Apps Script editor (`setupDatabase`).
  * It automatically creates and formats all 4 required sheets with exact columns,
  * formulas, color coding, and initial configuration.
  * ==============================================================================
  */
 
-function setupGarbaDatabase() {
+function setupDatabase() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
 
   // 1. Create or Reset "Student Registrations"
@@ -89,7 +89,7 @@ function setupGarbaDatabase() {
 
   // Title Banner
   dSheet.getRange('A1:F1').merge();
-  dSheet.getRange('A1').setValue('🎉 KGI GARBA NIGHT 2026 - LIVE EVENT DASHBOARD 🎉')
+  dSheet.getRange('A1').setValue('🎉 BOOKKRO - LIVE CAMPUS EVENT DASHBOARD 🎉')
     .setBackground('#1e1b4b')
     .setFontColor('#f59e0b')
     .setFontSize(16)
@@ -173,7 +173,7 @@ function setupGarbaDatabase() {
   setSheet.clear();
   var settingsRows = [
     ['Configuration Key', 'Value', 'Description'],
-    ['Event Name', 'KGI Garba Night 2026', 'Displayed on website and entry pass'],
+    ['Event Name', 'Campus Cultural Fest 2026', 'Displayed on website and entry pass'],
     ['Event Date', '16 October 2026', 'Official date of event'],
     ['Venue', 'Open Air Theatre', 'Event location'],
     ['Registration Open', 'TRUE', 'Master switch for registrations'],
@@ -189,5 +189,9 @@ function setupGarbaDatabase() {
   setSheet.setColumnWidth(2, 360);
   setSheet.setColumnWidth(3, 300);
 
-  SpreadsheetApp.getActiveSpreadsheet().toast('Garba database sheets created successfully!', 'Setup Complete', 5);
+  SpreadsheetApp.getActiveSpreadsheet().toast('Event database sheets created successfully!', 'Setup Complete', 5);
+}
+
+function setupGarbaDatabase() {
+  setupDatabase();
 }

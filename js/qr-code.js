@@ -1,5 +1,5 @@
 /**
- * KGI Garba Night 2026 - Lightweight Standalone QR Code Generator
+ * BOOKKRO - Lightweight Standalone QR Code Generator
  * Self-contained, zero-dependency QR code generator for ticket passes.
  */
 (function(window) {

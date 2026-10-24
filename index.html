@@ -115,7 +115,7 @@
           <!-- Real-Time Search Bar -->
           <div class="event-search-wrapper">
             <span class="event-search-icon">🔍</span>
-            <input type="text" id="eventSearchInput" class="event-search-input" placeholder="Search events by name, college (e.g. KGI, IIT, DU, BITS), city, or venue..." oninput="GarbaApp.onEventSearchInput(this.value)" />
+            <input type="text" id="eventSearchInput" class="event-search-input" placeholder="Search events by name, college (e.g. IIT, DU, BITS, NIT), city, or venue..." oninput="GarbaApp.onEventSearchInput(this.value)" />
             <button type="button" id="eventSearchClearBtn" class="event-search-clear" style="display:none;" onclick="GarbaApp.clearEventSearch()">✕</button>
           </div>
 
@@ -198,7 +198,7 @@
         <div id="eventHostCollegeBanner" class="event-reg-info-banner" style="margin-bottom:16px;">
           <div>
             <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:1px; color:var(--text-muted);">Organized & Hosted By</div>
-            <div id="eventHostCollegeName" class="event-reg-info-title">🏛️ KGI Group of Institutions</div>
+            <div id="eventHostCollegeName" class="event-reg-info-title">🏛️ National Institute of Technology</div>
           </div>
           <div id="eventHostClubTag" class="event-reg-info-college">
             <span>✨</span> <span id="eventHostClubName">Cultural Committee</span>
@@ -214,8 +214,8 @@
                 <div id="eventPosterTagline" class="bms-poster-tagline">✨ COLLEGE EXCLUSIVE</div>
                 <div id="eventDetailPosterIcon" class="bms-poster-icon">🪔</div>
                 <div>
-                  <h3 id="eventDetailPosterTitle" class="bms-poster-title">GARBA NIGHT 2026</h3>
-                  <div id="eventDetailPosterSub" style="font-size:0.8rem; color:#fef3c7; font-weight:600; margin-top:4px;">KGI CULTURAL FEST</div>
+                  <h3 id="eventDetailPosterTitle" class="bms-poster-title">CULTURAL FEST 2026</h3>
+                  <div id="eventDetailPosterSub" style="font-size:0.8rem; color:#fef3c7; font-weight:600; margin-top:4px;">NATIONAL CAMPUS FEST</div>
                 </div>
                 <div id="eventDetailPosterDate" style="font-size:0.7rem; color:#fde68a; letter-spacing:1px;">16 OCT • 6:00 PM</div>
               </div>
@@ -233,8 +233,8 @@
               </div>
 
               <!-- Title -->
-              <h2 id="eventDetailTitle" class="bms-title dynamic-event-name">KGI Garba Night 2026</h2>
-              <p id="eventDetailDesc" style="font-size:0.9rem; color:var(--text-sub); margin-bottom:14px; line-height:1.5;">The biggest cultural night of the year! Live traditional dhol rhythms, DJ sets, authentic Dandiya celebration, and festive dress code for college students & staff.</p>
+              <h2 id="eventDetailTitle" class="bms-title dynamic-event-name">National Campus Cultural Fest 2026</h2>
+              <p id="eventDetailDesc" style="font-size:0.9rem; color:var(--text-sub); margin-bottom:14px; line-height:1.5;">The premier cultural festival of the year! Live musical acts, DJ sets, dance competitions, food street, and inter-college invitations across universities.</p>
 
               <!-- Genre & Language Tags -->
               <div id="eventDetailTags" class="bms-tag-row">
@@ -335,8 +335,8 @@
           <div id="studentEventInfoBanner" class="event-reg-info-banner">
             <div>
               <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.75px; color:var(--text-muted);">Booking Pass For:</div>
-              <div id="studentEventTitleText" class="event-reg-info-title">KGI Garba Night 2026</div>
-              <div id="studentEventCollegeText" class="event-reg-info-college"><span>🏛️</span> Host Campus: KGI Group of Institutions</div>
+              <div id="studentEventTitleText" class="event-reg-info-title">National Campus Cultural Fest 2026</div>
+              <div id="studentEventCollegeText" class="event-reg-info-college"><span>🏛️</span> Host Campus: National Institute of Technology</div>
             </div>
             <a href="#event" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.navigateTo('event')">Change Event</a>
           </div>
@@ -360,7 +360,7 @@
             <!-- College Name (Enables Inter-College Booking for Any Event) -->
             <div class="form-group" id="studentCollegeGroup">
               <label class="form-label" for="studentCollegeName">Your College / University Name <span class="req">*</span></label>
-              <input type="text" id="studentCollegeName" name="collegeName" class="form-input" placeholder="e.g. KGI Group of Institutions or IIT Bombay" required />
+              <input type="text" id="studentCollegeName" name="collegeName" class="form-input" placeholder="e.g. IIT Bombay, Delhi University, BITS Pilani..." required />
               <p class="input-hint">Enter your enrolled college name (verified at the entry gate alongside your physical student ID card).</p>
             </div>
 
@@ -434,8 +434,8 @@
           <div id="teacherEventInfoBanner" class="event-reg-info-banner">
             <div>
               <div style="font-size:0.75rem; text-transform:uppercase; letter-spacing:0.75px; color:var(--text-muted);">Booking Faculty VIP Pass For:</div>
-              <div id="teacherEventTitleText" class="event-reg-info-title">KGI Garba Night 2026</div>
-              <div id="teacherEventCollegeText" class="event-reg-info-college"><span>🏛️</span> Host Campus: KGI Group of Institutions</div>
+              <div id="teacherEventTitleText" class="event-reg-info-title">National Campus Cultural Fest 2026</div>
+              <div id="teacherEventCollegeText" class="event-reg-info-college"><span>🏛️</span> Host Campus: National Institute of Technology</div>
             </div>
             <a href="#event" class="btn btn-secondary" style="width:auto; padding:6px 12px; font-size:0.75rem;" onclick="GarbaApp.navigateTo('event')">Change Event</a>
           </div>
@@ -459,7 +459,7 @@
             <!-- College Name -->
             <div class="form-group" id="teacherCollegeGroup">
               <label class="form-label" for="teacherCollegeName">Institution / College Name <span class="req">*</span></label>
-              <input type="text" id="teacherCollegeName" name="collegeName" class="form-input" placeholder="e.g. KGI Group of Institutions or IIT Bombay" required />
+              <input type="text" id="teacherCollegeName" name="collegeName" class="form-input" placeholder="e.g. IIT Bombay, Delhi University, BITS Pilani..." required />
             </div>
 
             <!-- 2. Employee / Staff ID -->
@@ -615,8 +615,8 @@
           <div id="digitalPassCard" class="digital-pass-card">
             <!-- Header Band -->
             <div class="ticket-header-band">
-              <div id="ticketHostCollegeBadge" class="ticket-college-badge">🏛️ KGI GROUP OF INSTITUTIONS • HOST CAMPUS</div>
-              <h2 id="ticketEventNameDisplay" class="dynamic-event-name">KGI GARBA NIGHT 2026</h2>
+              <div id="ticketHostCollegeBadge" class="ticket-college-badge">🏛️ NATIONAL INSTITUTE OF TECHNOLOGY • HOST CAMPUS</div>
+              <h2 id="ticketEventNameDisplay" class="dynamic-event-name">NATIONAL CAMPUS CULTURAL FEST 2026</h2>
               <p><span id="ticketEventDateDisplay" class="dynamic-event-date">16 October 2026</span> • <span id="ticketEventVenueDisplay" class="dynamic-event-venue">Open Air Theatre</span></p>
             </div>
 
@@ -824,14 +824,14 @@
                 <span>Login to Dashboard</span>
               </button>
 
-              <button type="button" class="btn btn-secondary" style="margin-top:8px; font-size:0.82rem; padding:8px 12px; border-color:rgba(245,158,11,0.5); color:#fde68a;" onclick="document.getElementById('loginAdminId').value='admin'; document.getElementById('loginAdminPassword').value='garba2026@admin';">
+              <button type="button" class="btn btn-secondary" style="margin-top:8px; font-size:0.82rem; padding:8px 12px; border-color:rgba(245,158,11,0.5); color:#fde68a;" onclick="document.getElementById('loginAdminId').value='admin'; document.getElementById('loginAdminPassword').value='bookkro2026@admin';">
                 <span>⚡</span>
                 <span>Auto-fill Admin Credentials</span>
               </button>
             </form>
 
             <p style="font-size:0.75rem; color:var(--text-muted); margin-top:16px;">
-              Admin ID: <strong style="color:#fde68a;">admin</strong> | Password: <strong style="color:#fde68a;">garba2026@admin</strong>
+              Admin ID: <strong style="color:#fde68a;">admin</strong> | Password: <strong style="color:#fde68a;">bookkro2026@admin</strong>
             </p>
           </div>
         </div>
@@ -1073,7 +1073,7 @@
                 </div>
                 <div class="form-group" style="margin-bottom:0;">
                   <label class="form-label" for="settingAdminPassword">Admin Password</label>
-                  <input type="text" id="settingAdminPassword" name="adminPassword" class="form-input" value="garba2026@admin" />
+                  <input type="text" id="settingAdminPassword" name="adminPassword" class="form-input" value="bookkro2026@admin" />
                 </div>
               </div>
             </div>
@@ -1318,14 +1318,14 @@
             <!-- 1. Hosting College Name -->
             <div class="form-group form-full-width">
               <label class="form-label" for="hostCollegeName">Hosting College / University Name <span class="req">*</span></label>
-              <input type="text" id="hostCollegeName" name="collegeName" class="form-input" placeholder="e.g. IIT Delhi, SRM University, St. Xavier's, KGI..." required />
+              <input type="text" id="hostCollegeName" name="collegeName" class="form-input" placeholder="e.g. IIT Delhi, SRM University, St. Xavier's, NIT..." required />
               <p class="input-hint">Any college in India or worldwide can host events on BOOKKRO.</p>
             </div>
 
             <!-- 2. College Acronym / Code -->
             <div class="form-group">
               <label class="form-label" for="hostCollegeCode">College Short Code / Acronym <span class="req">*</span></label>
-              <input type="text" id="hostCollegeCode" name="collegeCode" class="form-input" placeholder="e.g. IITD, SRM, SXC, DU, KGI" maxlength="6" style="text-transform:uppercase;" required />
+              <input type="text" id="hostCollegeCode" name="collegeCode" class="form-input" placeholder="e.g. IITD, SRM, SXC, DU, NIT" maxlength="6" style="text-transform:uppercase;" required />
               <p class="input-hint">Used for ticket ID prefixes (e.g. STU-IITD-XXXXXX).</p>
             </div>
 

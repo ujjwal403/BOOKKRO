@@ -1,8 +1,8 @@
 /**
  * ==============================================================================
- * KGI GARBA NIGHT 2026 - PRODUCTION GOOGLE APPS SCRIPT BACKEND
+ * BOOKKRO COLLEGE EVENTS - PRODUCTION GOOGLE APPS SCRIPT BACKEND
  * ==============================================================================
- * This script serves as the secure backend API for KGI Garba Night 2026.
+ * This script serves as the secure backend API for BOOKKRO College Events.
  * It interfaces directly with Google Sheets (Central Database) and Gmail (MailApp).
  *
  * Deployment Instructions:
@@ -65,7 +65,7 @@ function handleRequest(e) {
 
     switch (action) {
       case 'ping':
-        response = { success: true, message: 'KGI Garba Night API is live!', timestamp: new Date().toISOString() };
+        response = { success: true, message: 'BOOKKRO Events API is live!', timestamp: new Date().toISOString() };
         break;
 
       case 'getSettings':
@@ -124,7 +124,7 @@ function getSettingsFromSheet() {
   var ss = SpreadsheetApp.getActiveSpreadsheet();
   var sheet = ss.getSheetByName(SHEET_SETTINGS);
   var settings = {
-    eventName: 'KGI Garba Night 2026',
+    eventName: 'College Event 2026',
     eventDate: '16 October 2026',
     venue: 'Open Air Theatre',
     registrationOpen: true,

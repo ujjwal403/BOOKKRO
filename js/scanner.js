@@ -1,5 +1,5 @@
 /**
- * KGI Garba Night 2026 - Gate Camera Scanner Engine
+ * BOOKKRO - Gate Camera Scanner Engine
  * Features:
  * - HTML5 Camera Access (navigator.mediaDevices.getUserMedia)
  * - Environment (rear) camera default with flip support
